@@ -1,0 +1,508 @@
+%include ../lib/reveal.pdoc
+%reveal
+
+= ラムダ計算と型の話
+
+= お前誰よ
+
+%fragments
+- Twitter: `https://twitter.com/pasberth`@pasberth`
+- 興味: プログラミング言語(関数型,定理証明系…), 型システム
+- Haskell が好き
+- 証明したい…証明したくない？
+
+= お品書き
+
+%ol
+- 型なしラムダ計算の話
+- 演繹論理の話
+- 型付きラムダ計算の話
+
+= CHAPTER 1
+
+型なしラムダ計算の話
+
+= ラムダ計算って…？
+
+%fragments
+- λ式だけでいろいろするアレ
+- e.g. church encoding, scott encoding
+- 聡明なる読者のみなさんは当然知ってますよね？
+
+= 事例: church pair
+
+""\[pair:=\lambda x y z.z x y\]""
+""\[first:=\lambda p.p (\lambda x y.x)\]""
+""\[second:=\lambda p.p (\lambda x y.y)\]""
+
+= 例
+
+%fragments
+- ""\(first (pair\;M\;N)\)""
+- ""\(\equiv (\lambda p.p (\lambda x y.x)) (pair\;M\;N)\)""
+- ""\(\Longrightarrow_\beta (pair\;M\;M) (\lambda x y.x)\)""
+- ""\(\equiv ((\lambda x y z.z x y) MN) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_\beta ((\lambda y z.z M y) N) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_\beta (\lambda z.z M N) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_\beta (\lambda x y.x)M N\)""
+- ""\(\Longrightarrow_\beta (\lambda y.M)N\)""
+- ""\(\Longrightarrow_\beta M\)""
+
+= ラムダ項
+
+λで表される項のことです。
+
+%fragments
+- 加算個の変数 ""\(u_0\)"", ""\(u_1\)"", ""\(u_2\)""... はラムダ項である。
+この形のラムダ項を原子(_atom_)という
+- ""\(M\)"" と ""\(N\)"" がラムダ項ならば ""\((M N)\)"" はラムダ項である。
+この形のラムダ項を適用(_application_)という
+- ""\(M\)"" がラムダ項で ""\(x\)"" が変数ならば ""\((\lambda x.M)\)"" はラムダ項である。
+この形のラムダ項を抽象(_abstraction_)という
+
+= 自由変数と束縛変数
+
+ラムダ項の変数(_variable_)は2種類あります。一方は自由変数(_free variable_)で、
+他方は束縛変数(_bound variable_)です。
+たとえば、次のラムダ項には、自由変数 ""\(y\)"" と束縛変数
+""\(x\)"" が出現しています
+
+""\[\lambda x.xy\]""
+
+= 代入
+
+自由変数をラムダ項に置換する操作のこと。
+
+例:
+
+""\[[M/x](\lambda yz.zxy) \equiv \lambda yz.zMy\]""
+
+= ちなみに…
+
+代入をどのように書くかというのは人それぞれのスタイルがあります。
+型システム入門では ""\([x \mapsto N]M\)"" と書かれています。
+人によっては、 ""\(M[x:=N]\)"" と書くようです。
+今回は ""\([N/x]M\)"" という書き方を採用します。
+
+= アルファ変換
+
+束縛変数の名前を置換する操作のこと。
+""\(M \equiv_\alpha N\)"" が成り立つとき、 ラムダ項 ""\(M\)"" は
+ラムダ項 ""\(N\)"" と α-同値(_α-congruence_)であるといいます。
+
+例:
+
+%""\[\lambda x.x \equiv_\alpha \lambda y.y\]""
+
+= ベータ変形
+
+ラムダ項を評価(_evaluate_)して得られる別のラムダ項のことです。
+
+β-変形をする例:
+
+%fragments
+- ""\((\lambda xy.x) \alpha \beta\)""
+- ""\(\Longrightarrow_{\beta 1} (\lambda y.\alpha) \beta\)""
+- ""\(\Longrightarrow_{\beta 1} \alpha\)""
+
+= ベータ正規形
+
+""\(M \Longrightarrow_{\beta 1} N\)"" となるような ""\(N\)"" が存在しないとき、""\(M\)""
+はベータ正規形(_β-normal form_)である、といいます。ラムダ項がベータ正規形であるのは、
+そのなかに ""\((\lambda x.M)N\)"" という形の部分をもたないときです。
+
+また、 ""\((\lambda x.M)N\)"" のような部分を _β-redux_ といいます。
+
+""\(M \Longrightarrow_{\beta 1} N\)"" となるような ""\(N\)"" が存在し、かつ
+""\(N\)"" がβ-正規形とき、 ""\(M\)"" はβ-正規形 ""\(N\)"" を持つといいます。
+
+= 例
+
+たとえば、 ""\(\lambda x.x\)"" はβ-正規形です。
+それ以上簡約することができないからです。
+
+= ベータ正規形を持たない項
+
+β-正規形を持たない項も存在します。たとえば、
+""\((\lambda x.xx)(\lambda x.xx)\)"" はβ-正規形を持ちません。
+
+= CHAPTER 2
+
+演繹論理の話
+
+= 演繹論理って…？
+
+ある一般的な規則にしたがって、いくつかの仮定から、
+個々の結論を導く論理のことです。
+
+%ul
+- 伝統的に哲学に分類される(らしい)
+- 記号論理、数理論理とも呼ばれてます。
+- 古典論理、直観主義論理など、いろいろなタイプの論理があります。
+- 今回は古典論理を扱います。
+
+= 事例: 対偶
+
+「αならばβである」の対偶は「βでないならばαでない」となります。
+これを記号化すると、 ""\((\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)\)""
+となります。
+
+""\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \cfrac{
+            \cfrac{
+                \alpha \rightarrow \beta \;\;\; \alpha
+            }{
+                \beta
+            }
+            \;\;\;
+            \lnot \beta
+            }{
+                \bot
+            }
+        }{
+            \lnot\alpha
+        }
+    }
+    {
+        \lnot\beta\rightarrow\lnot\alpha
+    }
+}
+{
+    (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
+}
+\]""
+
+
+= 前提と仮定について
+
+前提(_premise_)と仮定(assumption)はよく似ています。
+ProofWiki とかでは明確に区別された概念のようなのですが正直
+ぼくにはよくわかりません(スイマセン…)。
+混乱を避けるために今回は一貫して仮定という言葉を使います。
+
+= 推論規則
+
+型システム入門とかでもよく使われる、
+次のような形をした図のことです。
+""\(\alpha_0 \; \alpha_1 \; \alpha_2 \; ... \;  \alpha_n\)"" という仮定から ""\(\beta\)"" という結論が
+導かれるということを意味します。
+
+""\[
+\frac{\alpha_0 \; \alpha_1 \; \alpha_2 \; ... \;  \alpha_n}{\beta}
+\]""
+
+= シークエント計算と推論図について
+
+推論規則を次々と適用して木の形の図を書き、真理を演繹することを
+シークエント計算といいます。そのようにして書かれた図のことを
+推論図 といいます。仮定なしの推論図のことを特別に証明図といいます。
+次の図は対偶 (""\((\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)\)"")
+の証明図です。
+
+""\[
+\dfrac{
+    \dfrac{
+        \dfrac{
+            \dfrac{
+            \dfrac{
+                \alpha \rightarrow \beta \;\;\; \alpha
+            }{
+                \beta
+            }
+            \;\;\;
+            \lnot \beta
+            }{
+                \bot
+            }
+        }{
+            \lnot\alpha
+        }
+    }
+    {
+        \lnot\beta\rightarrow\lnot\alpha
+    }
+}
+{
+    (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
+}
+\]""
+
+= 仮定について
+
+""\(\alpha\)"" という仮定をしたとき ""\(\beta\)"" という結論がでるということを、
+""\(\alpha \vdash \beta\)"" と書きます。
+
+たとえば、
+
+""\[
+\frac{\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta \;\;\; \alpha \vdash \alpha}{\alpha \rightarrow \beta, \alpha \vdash \beta}
+\]""
+
+のような形をした推論図は、 ""\(\alpha \rightarrow \beta\)"" と
+""\(\alpha\)"" のふたつの仮定をすれば、 ""\(\beta\)"" という結論が出る、
+ということを意味する推論図です。
+この証明図には仮定がふたつあります。
+
+= 仮定の除去について
+
+仮定の除去をするには、次のような規則を使います。
+
+""\[
+\frac{\alpha, \Gamma \vdash \beta}{\Gamma \vdash \alpha \rightarrow \beta}
+\]""
+
+""\(\alpha\)"" と仮定して ""\(\beta\)"" という結論が出た場合、
+その仮定なしで ""\(\alpha \rightarrow \beta\)"" という結論が出るということです。
+
+たとえば、次の証明図は、仮定なしで ""\(\alpha \rightarrow \alpha\)"" という
+結論を出しています。
+
+""\[
+\frac{\alpha \vdash \alpha}{\vdash \alpha \rightarrow \alpha}
+\]""
+
+= →-導入について
+
+さきほど仮定の除去という規則として紹介しましたが、
+→-導入ともいいます。つまり、→という記号を導入するための規則です。
+
+""\[
+\frac{\alpha, \Gamma \vdash \beta}{\Gamma \vdash \alpha \rightarrow \beta}
+\]""
+
+= →-除去について
+
+次のような形をした推論規則を→-除去とか Modus ponens といいます。
+
+""\[
+\frac{\alpha \rightarrow \beta \;\;\; \alpha}{\beta}
+\]""
+
+= ∧-導入ついて
+
+∧ は ""\(\alpha\)"" かつ ""\(\beta\)"" を表す記号です。
+""\(\alpha\)"" かつ ""\(\beta\)"" というふたつの仮定で
+導入できます。
+
+""\[
+\frac{\alpha \;\;\; \beta}{\alpha \land \beta}
+\]""
+
+= ∧-除去について
+
+""\(\alpha \land \beta\)"" という仮定からは、
+""\(\alpha\)"" と ""\(\beta\)"" のどちらでも
+結論できます。
+
+""\[
+\frac{\alpha \land \beta}{\alpha}
+\]""
+
+""<br />""
+
+
+""\[
+\frac{\alpha \land \beta}{\beta}
+\]""
+
+= ∨-導入について
+
+∨ は ""\(\alpha\)"" または ""\(\beta\)"" を表す記号です。
+""\(\alpha\)"" または ""\(\beta\)"" どちらかひとつの仮定で
+導入できます。
+
+""\[
+\frac{\alpha}{\alpha \lor \beta}
+\]""
+
+""<br />""
+
+""\[
+\frac{\beta}{\alpha \lor \beta}
+\]""
+
+= ∨-除去について
+
+∨-除去は少々複雑です。
+
+""\[
+\frac{\alpha \lor \beta \;\;\; \alpha, \Gamma \vdash \gamma \;\;\; \beta, \Gamma \vdash \gamma}{\gamma}
+\]""
+
+= ¬-導入について
+
+¬ は否定を表す記号です。
+""\(\alpha\)"" と仮定して矛盾が導かれた場合に
+""\(\alpha\)"" でないと結論することができます。
+
+""\[
+\frac{\alpha \vdash \bot}{\lnot \alpha}
+\]""
+
+= ¬-除去について
+
+""\(\alpha\)"" かつ ""\(\alpha\)"" と結論されたならば
+矛盾しています。
+
+""\[
+\frac{\alpha \;\;\; \lnot \alpha}{\bot}
+\]""
+
+= ⊥に関する推論規則
+
+矛盾は起こり得べからざるのことであります。
+任意の命題が正しいというのは起こり得べからざるのことでありますから、
+矛盾の推論規則として採用されます。
+
+""\[
+\frac{\bot}{\alpha}
+\]""
+
+= CHAPTER 3
+
+型付きラムダ計算の話
+
+= 型付きラムダ計算って…？
+
+%fragments
+- ラムダ計算を拡張したアレ
+- ラムダ計算でできることはほとんどできるが、たとえば
+  ""\((\lambda x.xx)(\lambda x.xx)\)"" は型で弾かれるのでできない
+- ！！！ゆえに無限ループが発生しない！！！
+
+= 事例: church pair
+
+""\[pair : (\alpha \rightarrow \beta \rightarrow (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)\]""
+""\[first : ((\alpha \rightarrow \beta \rightarrow \alpha) \rightarrow \gamma) \rightarrow \gamma\]""
+""\[second : ((\alpha \rightarrow \beta \rightarrow \beta) \rightarrow \gamma) \rightarrow \gamma\]""
+
+= 例: pair
+
+"""\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \cfrac
+            {
+                x : \alpha
+                \;\;\;
+                y : \beta
+                \;\;\;
+                z : (\alpha \rightarrow \beta \rightarrow \gamma)
+            }{
+                (z x y) : \gamma
+            }
+        }{
+            (\lambda z.z x y) : ((\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)
+        }
+    }{
+        (\lambda y z.z x y) : (\beta \rightarrow (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)
+    }
+}{
+    (\lambda x y z.z x y) : (\alpha \rightarrow \beta \rightarrow (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)
+}
+\]"""
+
+= Curry-Howard 対応について
+
+ん？　どっかで見たことあるぞ……？
+
+%fragments
+- 演繹論理における証明とラムダ計算の型付けが対応します
+- ラムダの型は→の演繹と対応
+- ペアの型は∧の演繹と対応
+- 詳しくは `"http://www.paultaylor.eu/stable/Proofs+Types.html"`Proofs and Types` を読みましょう
+
+= ラムダ計算で対偶
+
+ただし、 ""\(\lnot \alpha\)"" というのは
+""\(\alpha \rightarrow \bot\)"" というのの略記です。
+
+""\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \cfrac{
+            \cfrac{
+                f : \alpha \rightarrow \beta \;\;\; x : \alpha
+            }{
+                (f x) : \beta
+            }
+            \;\;\;
+            y : \lnot \beta
+            }{
+                (y (f x) ) : \bot
+            }
+        }{
+            (\lambda x. (y (f x))) : \lnot\alpha
+        }
+    }
+    {
+        (\lambda y x. (y (f x) y)) : \lnot\beta\rightarrow\lnot\alpha
+    }
+}
+{
+    (\lambda f y x. (y (f x))) : (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
+}
+\]""
+
+= Haskell 対偶
+
+ラムダ計算で演繹論理の証明ができたのだから、
+Haskell でもできそうですね？
+
+%pre"""
+data Bottom
+type Not a = a -> Bottom
+
+contr :: (a -> b) -> (Not b -> Not a)
+contr f y x = y (f x)"""
+
+%fragments
+- 型がつくということが証明できたことに相当します
+- 実行はあまり関係ない、コンパイルさえ通ればOK
+- コンパイル時マンにオススメ
+
+= 強正規化定理について
+
+型付きλ計算では強正規化性というのがあるらしいです。
+どんな項も必ず正規形になる(つまり、無限ループにならない)
+ということ。
+
+= 自己言及的な項について
+
+""\((\lambda x.xx)(\lambda x.xx)\)"" みたいなのは自己言及的な
+項です。これには型をつけることができません。ソフトウェア的には無限ループする
+ということですし、論理的には任意の命題が証明できる(つまり矛盾する)ということです。
+
+= ラッセルのパラドックスと型理論について
+
+%fragments
+- そもそも型とはなにか？
+- 古くはラッセルのパラドックスを解決するために生まれた
+- 自己言及的な項を構文的に排除することを目的につくられた
+
+= ラッセルのパラドックスについて
+
+%fragments
+- ""\(R = \{ x | x \not \in x \}\)"" のような集合の存在を仮定すると
+  矛盾する
+- 集合論のラッセルのパラドックスがラムダ計算では
+  ""\((\lambda x.xx)(\lambda x.xx)\)"" という形で現れた
+- どちらも原因は自己言及と再帰(カリーのパラドックス)
+
+= 型理論について
+
+%fragments
+- 自己言及と再帰は本質的に危険だとわかった
+- そのような集合を認めないために、項に Rank という型をつけて区別する必要があった
+- 集合論で生まれた型理論がラムダ計算に取り込まれた
+- ラムダ計算の型付けが演繹論理と対応することがわかった
+
+= 終わり
+
+ご清聴ありがとうございました
+

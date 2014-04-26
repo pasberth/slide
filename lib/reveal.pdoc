@@ -1,0 +1,86 @@
+%include ../paradocs/lib/stdhtml.pdoc
+
+%rule reveal
+  %before %"""
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.min.css">
+<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/simple.css" id="theme">
+<script src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
+<script src="http://lab.hakim.se/reveal-js/js/reveal.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener("load", function () {
+  Reveal.initialize({
+    transition: 'linear',
+    backgroundTransition: 'slide'
+  });
+})
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<style type="text/css">
+pre, code {
+  font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace !important;
+}
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+"""
+  %after %"""
+</div>
+</div>
+</body>
+</html>
+"""
+
+  %def = %1 %h2
+
+%rule block fragments
+  %before %"<ol>"
+  %after %"</ol>"
+
+  %def - %li
+
+%rule block fragments li
+  %extend inline
+  %before %""<li class="fragment">""
+  %after %"</li>"
+
+%rule block ol
+  %before %"<ol>"
+  %after %"</ol>"
+
+  %def - %li
+
+%rule block ol li
+  %extend inline
+  %before %"<li>"
+  %after %"</li>"
+
+%rule reveal 1
+  %extend inline
+  %extend block
+  %before %"<section>"
+  %after %"</section>"
+
+%rule reveal 1 paragraph
+  %before %"<p>"
+  %after %"</p>"
+
+%rule reveal 1 h2
+  %extend inline
+  %before %"<h2>"
+  %after %"</h2>"
+
+%rule reveal 1 2
+  %extend inline
+  %extend block
+  %before %"<section>"
+  %after %"</section>"
+
+
+%rule reveal 1 2 paragraph
+  %before %"<p>"
+  %after %"</p>"
