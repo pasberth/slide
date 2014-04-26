@@ -111,7 +111,7 @@ pre, code {
 </li><li class="fragment"> \(\Longrightarrow_{\beta 1} (\lambda y.\alpha) \beta\)
 </li><li class="fragment"> \(\Longrightarrow_{\beta 1} \alpha\)</li></ol><p></p></section><section> <h2> Haskell で…</h2><p>Haskell で説明するとこんな感じです。</p><p></p><pre>&#10;(\x y -> x) a b&#10;== (\y -> a) b&#10;== a</pre><p></p></section><section> <h2> ベータ正規形</h2><p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在しないとき、\(M\)
 はベータ正規形(</p><em>β-normal form</em>)である、といいます。ラムダ項がベータ正規形であるのは、
-そのなかに \((\lambda x.M)N\) という形の部分をもたないときです。<p>また、 \((\lambda x.M)N\) のような部分を </p><em>β-redux</em> といいます。<p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在し、かつ
+そのなかに \((\lambda x.M)N\) という形の部分をもたないときです。<p>また、 \((\lambda x.M)N\) のような部分を </p><em>β-redex</em> といいます。<p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在し、かつ
 \(N\) がβ-正規形とき、 \(M\) はβ-正規形 \(N\) を持つといいます。</p><p></p></section><section> <h2> 例</h2><p>たとえば、 \(\lambda x.x\) はβ-正規形です。
 それ以上簡約することができないからです。</p><p></p></section><section> <h2> ベータ正規形を持たない項</h2><p>β-正規形を持たない項も存在します。たとえば、
 \((\lambda x.xx)(\lambda x.xx)\) はβ-正規形を持ちません。</p><p></p></section><section> <h2> ちなみに</h2><p>Scheme Reports や、 Ruby の文化では、よく </p><code>=></code> という記号を使って
