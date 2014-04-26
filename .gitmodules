@@ -1,3 +1,9 @@
 [submodule "gh-pages"]
 	path = gh-pages
 	url = git@github.com:pasberth/slide.git
+[submodule "paradocs"]
+	path = paradocs
+	url = git@github.com:pasberth/paradocs.git
+[submodule "reveal.js"]
+	path = reveal.js
+	url = git@github.com:hakimel/reveal.js.git
