@@ -44,21 +44,20 @@ pre, code {
 </li><li class="fragment"> 証明したい…証明したくない？</li></ol><p></p></section><section> <h2> お品書き</h2><p></p><ol>
 <li> 型なしラムダ計算の話
 </li><li> 演繹論理の話
-</li><li> 型付きラムダ計算の話</li></ol><p></p></section><section> <h2> CHAPTER 1</h2><p>型なしラムダ計算の話</p><p></p></section><section> <h2> ラムダ計算って…？</h2><p></p><ol>
-<li class="fragment"> λ式だけでいろいろするアレ
-</li><li class="fragment"> e.g. church encoding, scott encoding
-</li><li class="fragment"> 聡明なる読者のみなさんは当然知ってますよね？</li></ol><p></p></section><section> <h2> 事例: church pair</h2><p>\[pair:=\lambda x y z.z x y\]
+</li><li> 型付きラムダ計算の話</li></ol><p></p></section><section> <h2> CHAPTER 1</h2><p>型なしラムダ計算の話</p><p></p></section><section> <h2> ラムダ計算って…？</h2><p></p><ul>
+<li> λ式だけでいろいろするアレ
+</li><li> e.g. church encoding, scott encoding</li></ul><p></p></section><section> <h2> 事例 church pair</h2><p>\[pair:=\lambda x y z.z x y\]
 \[first:=\lambda p.p (\lambda x y.x)\]
 \[second:=\lambda p.p (\lambda x y.y)\]</p><p></p></section><section> <h2> 例</h2><p></p><ol>
-<li class="fragment"> \(first (pair\;M\;N)\)
-</li><li class="fragment"> \(\equiv (\lambda p.p (\lambda x y.x)) (pair\;M\;N)\)
-</li><li class="fragment"> \(\Longrightarrow_\beta (pair\;M\;N) (\lambda x y.x)\)
-</li><li class="fragment"> \(\equiv ((\lambda x y z.z x y) MN) (\lambda x y.x)\)
-</li><li class="fragment"> \(\Longrightarrow_\beta ((\lambda y z.z M y) N) (\lambda x y.x)\)
-</li><li class="fragment"> \(\Longrightarrow_\beta (\lambda z.z M N) (\lambda x y.x)\)
-</li><li class="fragment"> \(\Longrightarrow_\beta (\lambda x y.x)M N\)
-</li><li class="fragment"> \(\Longrightarrow_\beta (\lambda y.M)N\)
-</li><li class="fragment"> \(\Longrightarrow_\beta M\)</li></ol><p></p></section><section> <h2> ラムダ項</h2><p>λで表される項のことです。</p><p></p><ol>
+<li class="fragment"> \(first (pair\;\alpha\;\beta)\)
+</li><li class="fragment"> \(\equiv (\lambda p.p (\lambda x y.x)) (pair\;\alpha\;\beta)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} (pair\;\alpha\;\beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\equiv ((\lambda x y z.z x y) \alpha \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} ((\lambda y z.z \alpha y) \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} (\lambda z.z \alpha \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} (\lambda x y.x)\alpha\beta\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} (\lambda y.\alpha)\beta\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} \alpha\)</li></ol><p></p></section><section> <h2> もっと厳密に</h2><p></p><strong>定義 1.1 ラムダ項(λ-term)</strong><p>λ-項は次のように帰納的に定義されます</p><p></p><ol>
 <li class="fragment"> 可算個の変数 \(u_0\), \(u_1\), \(u_2\)... はラムダ項である。
 この形のラムダ項を原子(<em>atom</em>)という
 </li><li class="fragment"> \(M\) と \(N\) がラムダ項ならば \((M N)\) はラムダ項である。
@@ -67,20 +66,75 @@ pre, code {
 この形のラムダ項を抽象(<em>abstraction</em>)という</li></ol><p></p></section><section> <h2> 自由変数と束縛変数</h2><p>ラムダ項の変数(</p><em>variable</em>)は2種類あります。一方は自由変数(<em>free variable</em>)で、
 他方は束縛変数(<em>bound variable</em>)です。
 たとえば、次のラムダ項には、自由変数 \(y\) と束縛変数
-\(x\) が出現しています<p>\[\lambda x.xy\]</p><p></p></section><section> <h2> 代入</h2><p>自由変数をラムダ項に置換する操作のこと。</p><p>例:</p><p>\[[M/x](\lambda yz.zxy) \equiv \lambda yz.zMy\]</p><p></p></section><section> <h2> ちなみに…</h2><p>代入をどのように書くかというのは人それぞれのスタイルがあります。
+\(x\) が出現しています<p>\[\lambda x.xy\]</p><p></p></section><section> <h2> 変数の集合</h2><p></p><strong>定義 1.2 変数の集合</strong><p>ラムダ項 \(M\) に含まれる変数の集合 \(V(M)\) を次のように帰納的に定義します</p><p></p><ol>
+<li class="fragment"> \(x\) が変数ならば \(V(x) = \{x\}\)
+</li><li class="fragment"> \(M\) と \(N\) がラムダ項ならば \(V(MN) = V(M) \cup V(N)\)
+</li><li class="fragment"> \(M\) がラムダ項で \(x\) が変数ならば \(V(\lambda x.M) = V(M) \cup \{x\}\)</li></ol><p></p></section><section> <h2> 自由変数の集合</h2><p></p><strong>定義 1.3 自由変数の集合</strong><p>ラムダ項 \(M\) に含まれる自由変数の集合 \(FV(M)\) を次のように帰納的に定義します</p><p></p><ol>
+<li class="fragment"> \(x\) が変数ならば \(FV(x) = \{x\}\)
+</li><li class="fragment"> \(M\) と \(N\) がラムダ項ならば \(FV(MN) = FV(M) \cup FV(N)\)
+</li><li class="fragment"> \(M\) がラムダ項で \(x\) が変数ならば \(FV(\lambda x.M) = FV(M) - \{x\}\)</li></ol><p></p></section><section> <h2> 束縛変数の集合</h2><p></p><strong>定義 1.4 束縛変数の集合</strong><p>ラムダ項 \(M\) に含まれる束縛変数の集合 \(BV(M)\) を次のように帰納的に定義します</p><p></p><ol>
+<li class="fragment"> \(BV(x) = \emptyset\)
+</li><li class="fragment"> \(BV(MN) = BV(M) \cup BV(N)\)
+</li><li class="fragment"> \(BV(\lambda x.M) = BV(M) \cup \{x\}\)</li></ol><p></p></section><section> <h2> 例</h2><p></p><ul>
+<li> \(V(\lambda x.xy) = \{x, y\}\)
+</li><li> \(FV(\lambda x.xy) = \{y\}\)
+</li><li> \(BV(\lambda x.xy) = \{x\}\)</li></ul><p></p></section><section> <h2> 代入</h2><p></p><strong>定義 1.5 代入(substitution)</strong><p>ラムダ項 \(M\) のなかの変数 \(x\) へのラムダ項 \(N\) の代入
+\([N/x]M\) を次のように帰納的に定義します</p><p></p><ol>
+<li class="fragment"> \([N/x]x \equiv N\)
+</li><li class="fragment"> \([N/x]y \equiv y\)
+</li><li class="fragment"> \([N/x](QR) \equiv ([N/x]Q [N/x]R)\)
+</li><li class="fragment"> \([N/x](\lambda y.Q) \equiv \lambda z.[N/x][z/y]Q\) <br />
+  (ただし \(z \not \in V(N(\lambda xy.Q))\))</li></ol><p></p></section><section> <h2> 例1</h2><p>代入をする例を示します。
+代入というのは簡単に申しますれば、変数をひとつ直接置き換えてしまう
+ということです。</p><p>\[[\alpha/x](\lambda yz.zxy) \equiv \lambda yz.z\;\alpha\;y\]</p><p></p></section><section> <h2> 例2</h2><p>代入はすこしテクニカルな操作です。たとえば、</p><p>\[[y/x](\lambda y.xy)\]</p><p>を考えてみます。 \(x\) を \(y\) に置き換えるという
+操作を素朴にすると、
+\[\lambda y.yy\] になるかもしれませんが、これはおかしいです。</p><p>そこで、定義1.5の4番めの規則で、</p><p>\[[y/x](\lambda y.xy) \equiv \lambda z.yz\]</p><p>となるようにします。</p><p></p></section><section> <h2> ちなみに…</h2><p>代入をどのように書くかというのは人それぞれのスタイルがあるようです。
 型システム入門では \([x \mapsto N]M\) と書かれています。
 人によっては、 \(M[x:=N]\) と書くようです。
-今回は \([N/x]M\) という書き方を採用します。</p><p></p></section><section> <h2> アルファ変換</h2><p>束縛変数の名前を置換する操作のこと。
-\(M \equiv_\alpha N\) が成り立つとき、 ラムダ項 \(M\) は
-ラムダ項 \(N\) と α-同値(</p><em>α-congruence</em>)であるといいます。<p>例:</p><p>\[\lambda x.x \equiv_\alpha \lambda y.y\]</p><p></p></section><section> <h2> ベータ変形</h2><p>ラムダ項を評価(</p><em>evaluate</em>)して得られる別のラムダ項のことです。<p>β-変形をする例:</p><p></p><ol>
+今回は \([N/x]M\) という書き方を採用します。</p><p></p></section><section> <h2> アルファ変換</h2><p></p><strong>定義 1.6 α-変換(<em>α-conversion</em>)</strong><p>ラムダ項 \(M\) の束縛変数を置き換えたラムダ項 \(N\) を表す
+α-変換の関係 \(M \equiv_\alpha N\) を次のように帰納的に定義します。</p><p></p><ol>
+<li class="fragment"> \(M \equiv_\alpha M\)
+</li><li class="fragment"> \(M \equiv_\alpha U\) かつ \(N \equiv_\alpha V\) ならば \(MN \equiv_\alpha UV\)
+</li><li class="fragment"> \([z/x]M \equiv_\alpha [z/y]N\) ならば \(\lambda x.M \equiv_\alpha \lambda y.N\)</li></ol><p></p></section><section> <h2> アルファ同値</h2><p>\(M \equiv_\alpha N\) が成り立つとき、 ラムダ項 \(M\) は
+ラムダ項 \(N\) と α-同値(</p><em>α-congruence</em>)であるといいます<p></p></section><section> <h2> 例1</h2><p>次のラムダ項は アルファ同値の関係にあります</p><p>\[\lambda x.x \equiv_\alpha \lambda y.y\]</p><p>なんとなれば、定義1.6のみっつめの規則に照らし合わせれば、
+\[\lambda z.[z/x]x \equiv_\alpha \lambda z.[z/y]y\]
+つまり
+\[\lambda z.z \equiv_\alpha \lambda z.z\]
+が成り立てばよいからであります。そしてそれは、
+ひとつめの規則によってただちに成り立つことがわかります</p><p></p></section><section> <h2> 例2</h2><p>次のラムダ項は アルファ同値の関係にはありません</p><p>\[x \not \equiv_\alpha y\]</p><p>なんとなれば、どの規則を当てはめようと、これが成り立つことにはならないからです。</p><p></p></section><section> <h2> ベータ変形</h2><p></p><strong>定義 1.7 β-変形(<em>β-reduction</em>)</strong><p>ラムダ項 \(M\) を評価(</p><em>evaluate</em>)して得られるラムダ項 \(N\) を表す
+β-変形の関係 \(M \Longrightarrow_{\beta 1} N\) を次のように帰納的に定義します。<p></p><ol>
+<li class="fragment"> \((\lambda x.M)N \Longrightarrow_{\beta 1} [N/x]M\)
+</li><li class="fragment"> \(N \Longrightarrow_{\beta 1} R\) ならば \(MN \Longrightarrow_{\beta 1} MR\)
+</li><li class="fragment"> \(M \Longrightarrow_{\beta 1} N\) ならば \(MR \Longrightarrow_{\beta 1} NR\)
+</li><li class="fragment"> \(M \Longrightarrow_{\beta 1} N\) ならば \(\lambda x.M \Longrightarrow_{\beta 1} \lambda x. N\)</li></ol><p></p></section><section> <h2> 例</h2><p>β-変形をする例を示します。</p><p></p><ol>
 <li class="fragment"> \((\lambda xy.x) \alpha \beta\)
 </li><li class="fragment"> \(\Longrightarrow_{\beta 1} (\lambda y.\alpha) \beta\)
-</li><li class="fragment"> \(\Longrightarrow_{\beta 1} \alpha\)</li></ol><p></p></section><section> <h2> ベータ正規形</h2><p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在しないとき、\(M\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} \alpha\)</li></ol><p></p></section><section> <h2> Haskell で…</h2><p>Haskell で説明するとこんな感じです。</p><p></p><pre>&#10;(\x y -> x) a b&#10;== (\y -> a) b&#10;== a</pre><p></p></section><section> <h2> ベータ正規形</h2><p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在しないとき、\(M\)
 はベータ正規形(</p><em>β-normal form</em>)である、といいます。ラムダ項がベータ正規形であるのは、
 そのなかに \((\lambda x.M)N\) という形の部分をもたないときです。<p>また、 \((\lambda x.M)N\) のような部分を </p><em>β-redux</em> といいます。<p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在し、かつ
 \(N\) がβ-正規形とき、 \(M\) はβ-正規形 \(N\) を持つといいます。</p><p></p></section><section> <h2> 例</h2><p>たとえば、 \(\lambda x.x\) はβ-正規形です。
 それ以上簡約することができないからです。</p><p></p></section><section> <h2> ベータ正規形を持たない項</h2><p>β-正規形を持たない項も存在します。たとえば、
-\((\lambda x.xx)(\lambda x.xx)\) はβ-正規形を持ちません。</p><p></p></section><section> <h2> CHAPTER 2</h2><p>演繹論理の話</p><p></p></section><section> <h2> 演繹論理って…？</h2><p>ある一般的な規則にしたがって、いくつかの仮定から、
+\((\lambda x.xx)(\lambda x.xx)\) はβ-正規形を持ちません。</p><p></p></section><section> <h2> ちなみに</h2><p>Scheme Reports や、 Ruby の文化では、よく </p><code>=></code> という記号を使って
+戻り値を表しますよね。あれがβ-変形です。<p></p><pre>&#10;->(x,y){ x }.call(1,2) # => 1</pre><p></p></section><section> <h2> 簡約してみよう</h2><p>さて、これで型なしラムダ計算に必要な構文および意味論がひとまず定義できました。
+この定義に従って、最初の例を簡約してみましょう！</p><p>まず、 pair, first, および second を定義します。
+これが正しいラムダ項であることは、定義により明らかです。</p><p>\[pair:=\lambda x y z.z x y\]
+\[first:=\lambda p.p (\lambda x y.x)\]
+\[second:=\lambda p.p (\lambda x y.y)\]</p><p></p></section><section> <h2> 簡約1</h2><p></p><ol>
+<li class="fragment"> \(first (pair\;\alpha\;\beta)\)
+</li><li class="fragment"> \(\equiv (\lambda p.p (\lambda x y.x)) (pair\;\alpha\;\beta)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} [(pair\;\alpha\;\beta)/p](p (\lambda x y.x))\)
+</li><li class="fragment"> \(\equiv (pair\;\alpha\;\beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\equiv ((\lambda x y z.z x y) \alpha \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} (([\alpha/x](\lambda y z.z x y)) \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\equiv ((\lambda y z.z \alpha y) \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} ([\beta/y](\lambda z.z \alpha y)) (\lambda x y.x)\)</li></ol><p></p></section><section> <h2> 簡約2</h2><p></p><ol>
+<li class="fragment"> \(\equiv (\lambda z.z \alpha \beta) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} [(\lambda x y.x)/z](z \alpha \beta)\)
+</li><li class="fragment"> \(\equiv (\lambda x y.x)\alpha\beta\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} ([\alpha/x](\lambda y.x))\beta\)
+</li><li class="fragment"> \(\equiv (\lambda y.\alpha)\beta\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} [\beta/y]\alpha\)
+</li><li class="fragment"> \(\equiv \alpha\)</li></ol><p></p></section><section> <h2> CHAPTER 2</h2><p>演繹論理の話</p><p></p></section><section> <h2> 演繹論理って…？</h2><p>ある一般的な規則にしたがって、いくつかの仮定から、
 個々の結論を導く論理のことです。</p><p></p><ul>
 <li> 伝統的に哲学に分類される(らしい)
 </li><li> 記号論理、数理論理とも呼ばれてます。
