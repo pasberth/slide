@@ -1,0 +1,284 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.min.css">
+<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/simple.css" id="theme">
+<script src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
+<script src="http://lab.hakim.se/reveal-js/js/reveal.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener("load", function () {
+  Reveal.initialize({
+    transition: 'linear',
+    backgroundTransition: 'slide'
+  });
+})
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<style type="text/css">
+pre, code {
+  font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace !important;
+}
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section> <h2> ラムダ計算と型の話</h2><p></p></section><section> <h2> お前誰よ</h2><p></p><ol>
+<li class="fragment"> Twitter: <a href="https://twitter.com/pasberth">@pasberth</a>
+</li><li class="fragment"> 興味: プログラミング言語(関数型,定理証明系…), 型システム
+</li><li class="fragment"> Haskell が好き
+</li><li class="fragment"> 証明したい…証明したくない？</li></ol><p></p></section><section> <h2> お品書き</h2><p></p><ol>
+<li> 型なしラムダ計算の話
+</li><li> 演繹論理の話
+</li><li> 型付きラムダ計算の話</li></ol><p></p></section><section> <h2> CHAPTER 1</h2><p>型なしラムダ計算の話</p><p></p></section><section> <h2> ラムダ計算って…？</h2><p></p><ol>
+<li class="fragment"> λ式だけでいろいろするアレ
+</li><li class="fragment"> e.g. church encoding, scott encoding
+</li><li class="fragment"> 聡明なる読者のみなさんは当然知ってますよね？</li></ol><p></p></section><section> <h2> 事例: church pair</h2><p>\[pair:=\lambda x y z.z x y\]
+\[first:=\lambda p.p (\lambda x y.x)\]
+\[second:=\lambda p.p (\lambda x y.y)\]</p><p></p></section><section> <h2> 例</h2><p></p><ol>
+<li class="fragment"> \(first (pair\;M\;N)\)
+</li><li class="fragment"> \(\equiv (\lambda p.p (\lambda x y.x)) (pair\;M\;N)\)
+</li><li class="fragment"> \(\Longrightarrow_\beta (pair\;M\;M) (\lambda x y.x)\)
+</li><li class="fragment"> \(\equiv ((\lambda x y z.z x y) MN) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_\beta ((\lambda y z.z M y) N) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_\beta (\lambda z.z M N) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_\beta (\lambda x y.x)M N\)
+</li><li class="fragment"> \(\Longrightarrow_\beta (\lambda y.M)N\)
+</li><li class="fragment"> \(\Longrightarrow_\beta M\)</li></ol><p></p></section><section> <h2> ラムダ項</h2><p>λで表される項のことです。</p><p></p><ol>
+<li class="fragment"> 加算個の変数 \(u_0\), \(u_1\), \(u_2\)... はラムダ項である。
+この形のラムダ項を原子(<em>atom</em>)という
+</li><li class="fragment"> \(M\) と \(N\) がラムダ項ならば \((M N)\) はラムダ項である。
+この形のラムダ項を適用(<em>application</em>)という
+</li><li class="fragment"> \(M\) がラムダ項で \(x\) が変数ならば \((\lambda x.M)\) はラムダ項である。
+この形のラムダ項を抽象(<em>abstraction</em>)という</li></ol><p></p></section><section> <h2> 自由変数と束縛変数</h2><p>ラムダ項の変数(</p><em>variable</em>)は2種類あります。一方は自由変数(<em>free variable</em>)で、
+他方は束縛変数(<em>bound variable</em>)です。
+たとえば、次のラムダ項には、自由変数 \(y\) と束縛変数
+\(x\) が出現しています<p>\[\lambda x.xy\]</p><p></p></section><section> <h2> 代入</h2><p>自由変数をラムダ項に置換する操作のこと。</p><p>例:</p><p>\[[M/x](\lambda yz.zxy) \equiv \lambda yz.zMy\]</p><p></p></section><section> <h2> ちなみに…</h2><p>代入をどのように書くかというのは人それぞれのスタイルがあります。
+型システム入門では \([x \mapsto N]M\) と書かれています。
+人によっては、 \(M[x:=N]\) と書くようです。
+今回は \([N/x]M\) という書き方を採用します。</p><p></p></section><section> <h2> アルファ変換</h2><p>束縛変数の名前を置換する操作のこと。
+\(M \equiv_\alpha N\) が成り立つとき、 ラムダ項 \(M\) は
+ラムダ項 \(N\) と α-同値(</p><em>α-congruence</em>)であるといいます。<p>例:</p><p>\[\lambda x.x \equiv_\alpha \lambda y.y\]</p><p></p></section><section> <h2> ベータ変形</h2><p>ラムダ項を評価(</p><em>evaluate</em>)して得られる別のラムダ項のことです。<p>β-変形をする例:</p><p></p><ol>
+<li class="fragment"> \((\lambda xy.x) \alpha \beta\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} (\lambda y.\alpha) \beta\)
+</li><li class="fragment"> \(\Longrightarrow_{\beta 1} \alpha\)</li></ol><p></p></section><section> <h2> ベータ正規形</h2><p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在しないとき、\(M\)
+はベータ正規形(</p><em>β-normal form</em>)である、といいます。ラムダ項がベータ正規形であるのは、
+そのなかに \((\lambda x.M)N\) という形の部分をもたないときです。<p>また、 \((\lambda x.M)N\) のような部分を </p><em>β-redux</em> といいます。<p>\(M \Longrightarrow_{\beta 1} N\) となるような \(N\) が存在し、かつ
+\(N\) がβ-正規形とき、 \(M\) はβ-正規形 \(N\) を持つといいます。</p><p></p></section><section> <h2> 例</h2><p>たとえば、 \(\lambda x.x\) はβ-正規形です。
+それ以上簡約することができないからです。</p><p></p></section><section> <h2> ベータ正規形を持たない項</h2><p>β-正規形を持たない項も存在します。たとえば、
+\((\lambda x.xx)(\lambda x.xx)\) はβ-正規形を持ちません。</p><p></p></section><section> <h2> CHAPTER 2</h2><p>演繹論理の話</p><p></p></section><section> <h2> 演繹論理って…？</h2><p>ある一般的な規則にしたがって、いくつかの仮定から、
+個々の結論を導く論理のことです。</p><p></p><ul>
+<li> 伝統的に哲学に分類される(らしい)
+</li><li> 記号論理、数理論理とも呼ばれてます。
+</li><li> 古典論理、直観主義論理など、いろいろなタイプの論理があります。
+</li><li> 今回は古典論理を扱います。</li></ul><p></p></section><section> <h2> 事例: 対偶</h2><p>「αならばβである」の対偶は「βでないならばαでない」となります。
+これを記号化すると、 \((\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)\)
+となります。</p><p>\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \cfrac{
+            \cfrac{
+                \alpha \rightarrow \beta \;\;\; \alpha
+            }{
+                \beta
+            }
+            \;\;\;
+            \lnot \beta
+            }{
+                \bot
+            }
+        }{
+            \lnot\alpha
+        }
+    }
+    {
+        \lnot\beta\rightarrow\lnot\alpha
+    }
+}
+{
+    (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
+}
+\]</p><p></p></section><section> <h2> 前提と仮定について</h2><p>前提(</p><em>premise</em>)と仮定(assumption)はよく似ています。
+ProofWiki とかでは明確に区別された概念のようなのですが正直
+ぼくにはよくわかりません(スイマセン…)。
+混乱を避けるために今回は一貫して仮定という言葉を使います。<p></p></section><section> <h2> 推論規則</h2><p>型システム入門とかでもよく使われる、
+次のような形をした図のことです。
+\(\alpha_0 \; \alpha_1 \; \alpha_2 \; ... \;  \alpha_n\) という仮定から \(\beta\) という結論が
+導かれるということを意味します。</p><p>\[
+\frac{\alpha_0 \; \alpha_1 \; \alpha_2 \; ... \;  \alpha_n}{\beta}
+\]</p><p></p></section><section> <h2> シークエント計算と推論図について</h2><p>推論規則を次々と適用して木の形の図を書き、真理を演繹することを
+シークエント計算といいます。そのようにして書かれた図のことを
+推論図 といいます。仮定なしの推論図のことを特別に証明図といいます。
+次の図は対偶 (\((\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)\))
+の証明図です。</p><p>\[
+\dfrac{
+    \dfrac{
+        \dfrac{
+            \dfrac{
+            \dfrac{
+                \alpha \rightarrow \beta \;\;\; \alpha
+            }{
+                \beta
+            }
+            \;\;\;
+            \lnot \beta
+            }{
+                \bot
+            }
+        }{
+            \lnot\alpha
+        }
+    }
+    {
+        \lnot\beta\rightarrow\lnot\alpha
+    }
+}
+{
+    (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
+}
+\]</p><p></p></section><section> <h2> 仮定について</h2><p>\(\alpha\) という仮定をしたとき \(\beta\) という結論がでるということを、
+\(\alpha \vdash \beta\) と書きます。</p><p>たとえば、</p><p>\[
+\frac{\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta \;\;\; \alpha \vdash \alpha}{\alpha \rightarrow \beta, \alpha \vdash \beta}
+\]</p><p>のような形をした推論図は、 \(\alpha \rightarrow \beta\) と
+\(\alpha\) のふたつの仮定をすれば、 \(\beta\) という結論が出る、
+ということを意味する推論図です。
+この証明図には仮定がふたつあります。</p><p></p></section><section> <h2> 仮定の除去について</h2><p>仮定の除去をするには、次のような規則を使います。</p><p>\[
+\frac{\alpha, \Gamma \vdash \beta}{\Gamma \vdash \alpha \rightarrow \beta}
+\]</p><p>\(\alpha\) と仮定して \(\beta\) という結論が出た場合、
+その仮定なしで \(\alpha \rightarrow \beta\) という結論が出るということです。</p><p>たとえば、次の証明図は、仮定なしで \(\alpha \rightarrow \alpha\) という
+結論を出しています。</p><p>\[
+\frac{\alpha \vdash \alpha}{\vdash \alpha \rightarrow \alpha}
+\]</p><p></p></section><section> <h2> →-導入について</h2><p>さきほど仮定の除去という規則として紹介しましたが、
+→-導入ともいいます。つまり、→という記号を導入するための規則です。</p><p>\[
+\frac{\alpha, \Gamma \vdash \beta}{\Gamma \vdash \alpha \rightarrow \beta}
+\]</p><p></p></section><section> <h2> →-除去について</h2><p>次のような形をした推論規則を→-除去とか Modus ponens といいます。</p><p>\[
+\frac{\alpha \rightarrow \beta \;\;\; \alpha}{\beta}
+\]</p><p></p></section><section> <h2> ∧-導入ついて</h2><p>∧ は \(\alpha\) かつ \(\beta\) を表す記号です。
+\(\alpha\) かつ \(\beta\) というふたつの仮定で
+導入できます。</p><p>\[
+\frac{\alpha \;\;\; \beta}{\alpha \land \beta}
+\]</p><p></p></section><section> <h2> ∧-除去について</h2><p>\(\alpha \land \beta\) という仮定からは、
+\(\alpha\) と \(\beta\) のどちらでも
+結論できます。</p><p>\[
+\frac{\alpha \land \beta}{\alpha}
+\]</p><p><br /></p><p>\[
+\frac{\alpha \land \beta}{\beta}
+\]</p><p></p></section><section> <h2> ∨-導入について</h2><p>∨ は \(\alpha\) または \(\beta\) を表す記号です。
+\(\alpha\) または \(\beta\) どちらかひとつの仮定で
+導入できます。</p><p>\[
+\frac{\alpha}{\alpha \lor \beta}
+\]</p><p><br /></p><p>\[
+\frac{\beta}{\alpha \lor \beta}
+\]</p><p></p></section><section> <h2> ∨-除去について</h2><p>∨-除去は少々複雑です。</p><p>\[
+\frac{\alpha \lor \beta \;\;\; \alpha, \Gamma \vdash \gamma \;\;\; \beta, \Gamma \vdash \gamma}{\gamma}
+\]</p><p></p></section><section> <h2> ¬-導入について</h2><p>¬ は否定を表す記号です。
+\(\alpha\) と仮定して矛盾が導かれた場合に
+\(\alpha\) でないと結論することができます。</p><p>\[
+\frac{\alpha \vdash \bot}{\lnot \alpha}
+\]</p><p></p></section><section> <h2> ¬-除去について</h2><p>\(\alpha\) かつ \(\alpha\) と結論されたならば
+矛盾しています。</p><p>\[
+\frac{\alpha \;\;\; \lnot \alpha}{\bot}
+\]</p><p></p></section><section> <h2> ⊥に関する推論規則</h2><p>矛盾は起こり得べからざるのことであります。
+任意の命題が正しいというのは起こり得べからざるのことでありますから、
+矛盾の推論規則として採用されます。</p><p>\[
+\frac{\bot}{\alpha}
+\]</p><p></p></section><section> <h2> CHAPTER 3</h2><p>型付きラムダ計算の話</p><p></p></section><section> <h2> 型付きラムダ計算って…？</h2><p></p><ol>
+<li class="fragment"> ラムダ計算を拡張したアレ
+</li><li class="fragment"> ラムダ計算でできることはほとんどできるが、たとえば
+  \((\lambda x.xx)(\lambda x.xx)\) は型で弾かれるのでできない
+</li><li class="fragment"> ！！！ゆえに無限ループが発生しない！！！</li></ol><p></p></section><section> <h2> 事例: church pair</h2><p>\[pair : (\alpha \rightarrow \beta \rightarrow (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)\]
+\[first : ((\alpha \rightarrow \beta \rightarrow \alpha) \rightarrow \gamma) \rightarrow \gamma\]
+\[second : ((\alpha \rightarrow \beta \rightarrow \beta) \rightarrow \gamma) \rightarrow \gamma\]</p><p></p></section><section> <h2> 例: pair</h2><p>\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \cfrac
+            {
+                x : \alpha
+                \;\;\;
+                y : \beta
+                \;\;\;
+                z : (\alpha \rightarrow \beta \rightarrow \gamma)
+            }{
+                (z x y) : \gamma
+            }
+        }{
+            (\lambda z.z x y) : ((\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)
+        }
+    }{
+        (\lambda y z.z x y) : (\beta \rightarrow (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)
+    }
+}{
+    (\lambda x y z.z x y) : (\alpha \rightarrow \beta \rightarrow (\alpha \rightarrow \beta \rightarrow \gamma) \rightarrow \gamma)
+}
+\]</p><p></p></section><section> <h2> Curry-Howard 対応について</h2><p>ん？　どっかで見たことあるぞ……？</p><p></p><ol>
+<li class="fragment"> 演繹論理における証明とラムダ計算の型付けが対応します
+</li><li class="fragment"> ラムダの型は→の演繹と対応
+</li><li class="fragment"> ペアの型は∧の演繹と対応
+</li><li class="fragment"> 詳しくは <a href="http://www.paultaylor.eu/stable/Proofs+Types.html">Proofs and Types</a> を読みましょう</li></ol><p></p></section><section> <h2> ラムダ計算で対偶</h2><p>ただし、 \(\lnot \alpha\) というのは
+\(\alpha \rightarrow \bot\) というのの略記です。</p><p>\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \cfrac{
+            \cfrac{
+                f : \alpha \rightarrow \beta \;\;\; x : \alpha
+            }{
+                (f x) : \beta
+            }
+            \;\;\;
+            y : \lnot \beta
+            }{
+                (y (f x) ) : \bot
+            }
+        }{
+            (\lambda x. (y (f x))) : \lnot\alpha
+        }
+    }
+    {
+        (\lambda y x. (y (f x) y)) : \lnot\beta\rightarrow\lnot\alpha
+    }
+}
+{
+    (\lambda f y x. (y (f x))) : (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
+}
+\]</p><p></p></section><section> <h2> Haskell 対偶</h2><p>ラムダ計算で演繹論理の証明ができたのだから、
+Haskell でもできそうですね？</p><p></p><pre>&#10;data Bottom&#10;type Not a = a -> Bottom&#10;&#10;contr :: (a -> b) -> (Not b -> Not a)&#10;contr f y x = y (f x)</pre><p></p><ol>
+<li class="fragment"> 型がつくということが証明できたことに相当します
+</li><li class="fragment"> 実行はあまり関係ない、コンパイルさえ通ればOK
+</li><li class="fragment"> コンパイル時マンにオススメ</li></ol><p></p></section><section> <h2> 強正規化定理について</h2><p>型付きλ計算では強正規化性というのがあるらしいです。
+どんな項も必ず正規形になる(つまり、無限ループにならない)
+ということ。</p><p></p></section><section> <h2> 自己言及的な項について</h2><p>\((\lambda x.xx)(\lambda x.xx)\) みたいなのは自己言及的な
+項です。これには型をつけることができません。ソフトウェア的には無限ループする
+ということですし、論理的には任意の命題が証明できる(つまり矛盾する)ということです。</p><p></p></section><section> <h2> ラッセルのパラドックスと型理論について</h2><p></p><ol>
+<li class="fragment"> そもそも型とはなにか？
+</li><li class="fragment"> 古くはラッセルのパラドックスを解決するために生まれた
+</li><li class="fragment"> 自己言及的な項を構文的に排除することを目的につくられた</li></ol><p></p></section><section> <h2> ラッセルのパラドックスについて</h2><p></p><ol>
+<li class="fragment"> \(R = \{ x | x \not \in x \}\) のような集合の存在を仮定すると
+  矛盾する
+</li><li class="fragment"> 集合論のラッセルのパラドックスがラムダ計算では
+  \((\lambda x.xx)(\lambda x.xx)\) という形で現れた
+</li><li class="fragment"> どちらも原因は自己言及と再帰(カリーのパラドックス)</li></ol><p></p></section><section> <h2> 型理論について</h2><p></p><ol>
+<li class="fragment"> 自己言及と再帰は本質的に危険だとわかった
+</li><li class="fragment"> そのような集合を認めないために、項に Rank という型をつけて区別する必要があった
+</li><li class="fragment"> 集合論で生まれた型理論がラムダ計算に取り込まれた
+</li><li class="fragment"> ラムダ計算の型付けが演繹論理と対応することがわかった</li></ol><p></p></section><section> <h2> 終わり</h2><p>ご清聴ありがとうございました</p><p></p></section>
+</div>
+</div>
+</body>
+</html>
