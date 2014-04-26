@@ -40,7 +40,7 @@
 %fragments
 - ""\(first (pair\;M\;N)\)""
 - ""\(\equiv (\lambda p.p (\lambda x y.x)) (pair\;M\;N)\)""
-- ""\(\Longrightarrow_\beta (pair\;M\;M) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_\beta (pair\;M\;N) (\lambda x y.x)\)""
 - ""\(\equiv ((\lambda x y z.z x y) MN) (\lambda x y.x)\)""
 - ""\(\Longrightarrow_\beta ((\lambda y z.z M y) N) (\lambda x y.x)\)""
 - ""\(\Longrightarrow_\beta (\lambda z.z M N) (\lambda x y.x)\)""
