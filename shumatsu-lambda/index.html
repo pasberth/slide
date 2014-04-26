@@ -52,7 +52,7 @@ pre, code {
 \[second:=\lambda p.p (\lambda x y.y)\]</p><p></p></section><section> <h2> 例</h2><p></p><ol>
 <li class="fragment"> \(first (pair\;M\;N)\)
 </li><li class="fragment"> \(\equiv (\lambda p.p (\lambda x y.x)) (pair\;M\;N)\)
-</li><li class="fragment"> \(\Longrightarrow_\beta (pair\;M\;M) (\lambda x y.x)\)
+</li><li class="fragment"> \(\Longrightarrow_\beta (pair\;M\;N) (\lambda x y.x)\)
 </li><li class="fragment"> \(\equiv ((\lambda x y z.z x y) MN) (\lambda x y.x)\)
 </li><li class="fragment"> \(\Longrightarrow_\beta ((\lambda y z.z M y) N) (\lambda x y.x)\)
 </li><li class="fragment"> \(\Longrightarrow_\beta (\lambda z.z M N) (\lambda x y.x)\)
