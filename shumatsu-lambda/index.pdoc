@@ -228,11 +228,6 @@
 - ""\(M \longrightarrow_{\beta} N\)"" ならば ""\(M \Longrightarrow_\beta N\)""
 - ""\(M \longrightarrow_{\beta} N\)"" かつ ""\(N \Longrightarrow_{\beta} R\)"" ならば ""\(M \Longrightarrow_\beta R\)""
 
-%fragments
-- ""\((\lambda x.M)N \Longrightarrow_{1 \beta} [N/x]M\)""
-- ""\(N \Longrightarrow_{1 \beta} R\)"" ならば ""\(MN \Longrightarrow_{1 \beta} MR\)""
-- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば ""\(MR \Longrightarrow_{1 \beta} NR\)""
-- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば ""\(\lambda x.M \Longrightarrow_{1 \beta} \lambda x. N\)""
 = 例
 
 β-変形をする例を示します。
