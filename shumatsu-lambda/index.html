@@ -206,7 +206,8 @@ ProofWiki とかでは明確に区別された概念のようなのですが正�
     (\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)
 }
 \]</p><p></p></section><section> <h2> 仮定について</h2><p>\(\alpha\) という仮定をしたとき \(\beta\) という結論がでるということを、
-\(\alpha \vdash \beta\) と書きます。</p><p>たとえば、</p><p>\[
+\(\alpha \vdash \beta\) と書きます。仮定がなんであるか明らかである場合には、
+スペースの都合上 \(\beta\) と省略して書くこともあります。</p><p>たとえば、</p><p>\[
 \frac{\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta \;\;\; \alpha \vdash \alpha}{\alpha \rightarrow \beta, \alpha \vdash \beta}
 \]</p><p>のような形をした推論図は、 \(\alpha \rightarrow \beta\) と
 \(\alpha\) のふたつの仮定をすれば、 \(\beta\) という結論が出る、
@@ -251,6 +252,92 @@ ProofWiki とかでは明確に区別された概念のようなのですが正�
 任意の命題が正しいというのは起こり得べからざるのことでありますから、
 矛盾の推論規則として採用されます。</p><p>\[
 \frac{\bot}{\alpha}
+\]</p><p></p></section><section> <h2> 証明してみよう</h2><p>対偶を記号で表した \((\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)\) が
+真理であることを演繹してみましょう！</p><p></p></section><section> <h2> 仮定</h2><p>\(\alpha \rightarrow \beta\) であると仮定します。</p><p>\[
+\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta
+\]</p><p></p></section><section> <h2> 仮定</h2><p>\(\alpha\) であると仮定します。</p><p>\[
+\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta \;\;\; \alpha \vdash \alpha
+\]</p><p></p></section><section> <h2> 結論</h2><p>\(\alpha \rightarrow \beta\) と \(\alpha\) のふたつの仮定から、
+→-除去の規則で、 \(\beta\) であると結論できます。</p><p>\[
+\cfrac{
+    \alpha \rightarrow \beta \;\;\; \alpha
+}{
+    \alpha \rightarrow \beta, \alpha \vdash \beta
+}
+\]</p><p></p></section><section> <h2> 仮定</h2><p>\(\lnot \beta\) と仮定します。</p><p>\[
+\cfrac{
+    \alpha \rightarrow \beta \;\;\; \alpha
+}{
+    \alpha \rightarrow \beta, \alpha \vdash \beta
+} \;\;\; \lnot \beta \vdash \lnot \beta
+\]</p><p></p></section><section> <h2> 結論</h2><p>\(\beta\) かつ \(\lnot \beta\) という結論がでてしまったので、
+\(\alpha \rightarrow \beta\) と \(\alpha\) と
+\(\lnot \beta\) のみっつの仮定から、¬-除去の規則で、
+矛盾すると結論できます。</p><p>\[
+\cfrac{
+\cfrac{
+    \alpha \rightarrow \beta \;\;\; \alpha
+}{
+    \beta
+}\;\;\; \lnot \beta
+}
+{
+    \alpha \rightarrow \beta, \alpha, \lnot \beta \vdash \bot
+}
+\]</p><p></p></section><section> <h2> 結論</h2><p>矛盾が導けたので、¬-導入の規則で仮定をひとつ取り除き、
+\(\lnot \alpha\) であると結論できます。</p><p>\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \alpha \rightarrow \beta \;\;\; \alpha
+        }{
+            \beta
+        } \;\;\; \lnot \beta
+    }
+    {
+        \bot
+    }
+}{
+    \alpha \rightarrow \beta, \lnot \beta \vdash \lnot \alpha
+}
+\]</p><p></p></section><section> <h2> 結論</h2><p>→-導入の規則で、仮定をひとつ取り除きます。</p><p>\[
+\cfrac{
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \alpha \rightarrow \beta \;\;\; \alpha
+        }{
+            \beta
+        } \;\;\; \lnot \beta
+    }
+    {
+        \bot
+    }
+}{
+    \lnot \alpha
+}
+}{
+    \alpha \rightarrow \beta \vdash \lnot \beta \rightarrow \lnot \alpha
+}
+\]</p><p></p></section><section> <h2> 結論</h2><p>→-導入の規則で、仮定をひとつ取り除きます。</p><p>証明終わり。</p><p>\[
+\cfrac{
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \alpha \rightarrow \beta \;\;\; \alpha
+        }{
+            \beta
+        } \;\;\; \lnot \beta
+    }
+    {
+        \bot
+    }
+}{
+    \lnot \alpha
+}
+}{
+    \vdash (\alpha \rightarrow \beta) \rightarrow (\lnot \beta \rightarrow \lnot \alpha)
+}
 \]</p><p></p></section><section> <h2> CHAPTER 3</h2><p>型付きラムダ計算の話</p><p></p></section><section> <h2> 型付きラムダ計算って…？</h2><p></p><ol>
 <li class="fragment"> ラムダ計算を拡張したアレ
 </li><li class="fragment"> ラムダ計算でできることはほとんどできるが、たとえば
