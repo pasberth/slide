@@ -395,7 +395,8 @@ ProofWiki とかでは明確に区別された概念のようなのですが正�
 = 仮定について
 
 ""\(\alpha\)"" という仮定をしたとき ""\(\beta\)"" という結論がでるということを、
-""\(\alpha \vdash \beta\)"" と書きます。
+""\(\alpha \vdash \beta\)"" と書きます。仮定がなんであるか明らかである場合には、
+スペースの都合上 ""\(\beta\)"" と省略して書くこともあります。
 
 たとえば、
 
@@ -522,6 +523,148 @@ ProofWiki とかでは明確に区別された概念のようなのですが正�
 ""\[
 \frac{\bot}{\alpha}
 \]""
+
+= 証明してみよう
+
+対偶を記号で表した ""\((\alpha\rightarrow\beta)\rightarrow(\lnot\beta\rightarrow\lnot\alpha)\)"" が
+真理であることを演繹してみましょう！
+
+= 仮定
+
+""\(\alpha \rightarrow \beta\)"" であると仮定します。
+
+""\[
+\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta
+\]""
+
+= 仮定
+
+""\(\alpha\)"" であると仮定します。
+
+""\[
+\alpha \rightarrow \beta \vdash \alpha \rightarrow \beta \;\;\; \alpha \vdash \alpha
+\]""
+
+= 結論
+
+""\(\alpha \rightarrow \beta\)"" と ""\(\alpha\)"" のふたつの仮定から、
+→-除去の規則で、 ""\(\beta\)"" であると結論できます。
+
+""\[
+\cfrac{
+    \alpha \rightarrow \beta \;\;\; \alpha
+}{
+    \alpha \rightarrow \beta, \alpha \vdash \beta
+}
+\]""
+
+= 仮定
+
+""\(\lnot \beta\)"" と仮定します。
+
+""\[
+\cfrac{
+    \alpha \rightarrow \beta \;\;\; \alpha
+}{
+    \alpha \rightarrow \beta, \alpha \vdash \beta
+} \;\;\; \lnot \beta \vdash \lnot \beta
+\]""
+
+= 結論
+
+""\(\beta\)"" かつ ""\(\lnot \beta\)"" という結論がでてしまったので、
+""\(\alpha \rightarrow \beta\)"" と ""\(\alpha\)"" と
+""\(\lnot \beta\)"" のみっつの仮定から、¬-除去の規則で、
+矛盾すると結論できます。
+
+""\[
+\cfrac{
+\cfrac{
+    \alpha \rightarrow \beta \;\;\; \alpha
+}{
+    \beta
+}\;\;\; \lnot \beta
+}
+{
+    \alpha \rightarrow \beta, \alpha, \lnot \beta \vdash \bot
+}
+\]""
+
+= 結論
+
+矛盾が導けたので、¬-導入の規則で仮定をひとつ取り除き、
+""\(\lnot \alpha\)"" であると結論できます。
+
+""\[
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \alpha \rightarrow \beta \;\;\; \alpha
+        }{
+            \beta
+        } \;\;\; \lnot \beta
+    }
+    {
+        \bot
+    }
+}{
+    \alpha \rightarrow \beta, \lnot \beta \vdash \lnot \alpha
+}
+\]""
+
+= 結論
+
+→-導入の規則で、仮定をひとつ取り除きます。
+
+""\[
+\cfrac{
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \alpha \rightarrow \beta \;\;\; \alpha
+        }{
+            \beta
+        } \;\;\; \lnot \beta
+    }
+    {
+        \bot
+    }
+}{
+    \lnot \alpha
+}
+}{
+    \alpha \rightarrow \beta \vdash \lnot \beta \rightarrow \lnot \alpha
+}
+\]""
+
+
+= 結論
+
+→-導入の規則で、仮定をひとつ取り除きます。
+
+証明終わり。
+
+""\[
+\cfrac{
+\cfrac{
+    \cfrac{
+        \cfrac{
+            \alpha \rightarrow \beta \;\;\; \alpha
+        }{
+            \beta
+        } \;\;\; \lnot \beta
+    }
+    {
+        \bot
+    }
+}{
+    \lnot \alpha
+}
+}{
+    \vdash (\alpha \rightarrow \beta) \rightarrow (\lnot \beta \rightarrow \lnot \alpha)
+}
+\]""
+
 
 = CHAPTER 3
 
