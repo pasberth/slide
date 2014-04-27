@@ -39,13 +39,13 @@
 %fragments
 - ""\(first (pair\;\alpha\;\beta)\)""
 - ""\(\equiv (\lambda p.p (\lambda x y.x)) (pair\;\alpha\;\beta)\)""
-- ""\(\Longrightarrow_{\beta 1} (pair\;\alpha\;\beta) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_{1 \beta} (pair\;\alpha\;\beta) (\lambda x y.x)\)""
 - ""\(\equiv ((\lambda x y z.z x y) \alpha \beta) (\lambda x y.x)\)""
-- ""\(\Longrightarrow_{\beta 1} ((\lambda y z.z \alpha y) \beta) (\lambda x y.x)\)""
-- ""\(\Longrightarrow_{\beta 1} (\lambda z.z \alpha \beta) (\lambda x y.x)\)""
-- ""\(\Longrightarrow_{\beta 1} (\lambda x y.x)\alpha\beta\)""
-- ""\(\Longrightarrow_{\beta 1} (\lambda y.\alpha)\beta\)""
-- ""\(\Longrightarrow_{\beta 1} \alpha\)""
+- ""\(\Longrightarrow_{1 \beta} ((\lambda y z.z \alpha y) \beta) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_{1 \beta} (\lambda z.z \alpha \beta) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_{1 \beta} (\lambda x y.x)\alpha\beta\)""
+- ""\(\Longrightarrow_{1 \beta} (\lambda y.\alpha)\beta\)""
+- ""\(\Longrightarrow_{1 \beta} \alpha\)""
 
 = もっと厳密に
 
@@ -69,6 +69,13 @@
 ""\(x\)"" が出現しています
 
 ""\[\lambda x.xy\]""
+
+= 記法の約束
+
+カッコは適当に省略します。
+適用は左結合であり、抽象よりも優先されます。たとえば、 ""\(\lambda x.MNR\)"" は
+""\((\lambda x.((MN)R))\)"" の省略です。 また、 ""\(\lambda x.\lambda y.\lambda z.M\)"" を
+""\(\lambda xyz.M\)"" と略します。
 
 = 変数の集合
 
@@ -193,27 +200,47 @@
 
 なんとなれば、どの規則を当てはめようと、これが成り立つことにはならないからです。
 
-= ベータ変形
+= ベータ変形1
 
 *定義 1.7 β-変形(_β-reduction_)*
 
-ラムダ項 ""\(M\)"" を簡約して得られるラムダ項 ""\(N\)"" を表す
-β-変形の関係 ""\(M \Longrightarrow_{\beta 1} N\)"" を次のように帰納的に定義します。
+ラムダ項 ""\(M\)"" を1ステップ簡約して得られるラムダ項 ""\(N\)"" を表す
+β-変形の関係 ""\(M \Longrightarrow_{1 \beta} N\)"" を次のように帰納的に定義します。
 
 %fragments
-- ""\((\lambda x.M)N \Longrightarrow_{\beta 1} [N/x]M\)""
-- ""\(N \Longrightarrow_{\beta 1} R\)"" ならば ""\(MN \Longrightarrow_{\beta 1} MR\)""
-- ""\(M \Longrightarrow_{\beta 1} N\)"" ならば ""\(MR \Longrightarrow_{\beta 1} NR\)""
-- ""\(M \Longrightarrow_{\beta 1} N\)"" ならば ""\(\lambda x.M \Longrightarrow_{\beta 1} \lambda x. N\)""
+- ""\((\lambda x.M)N \Longrightarrow_{1 \beta} [N/x]M\)""
+- ""\(N \Longrightarrow_{1 \beta} R\)"" ならば ""\(MN \Longrightarrow_{1 \beta} MR\)""
+- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば ""\(MR \Longrightarrow_{1 \beta} NR\)""
+- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば ""\(\lambda x.M \Longrightarrow_{1 \beta} \lambda x. N\)""
 
+= ベータ変形2
+
+β-変形の関係 ""\(M \longrightarrow_{\beta} N\)"" を次のように定義します。
+
+- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば  ""\(M \longrightarrow_{\beta} N\)""
+
+= ベータ変形3
+
+ラムダ項 ""\(M\)"" をnステップ簡約して得られるラムダ項 ""\(N\)"" を表す
+β-変形の関係 ""\(M \Longrightarrow_\beta N\)"" を次のように帰納的に定義します。
+
+%fragments
+- ""\(M \longrightarrow_{\beta} N\)"" ならば ""\(M \Longrightarrow_\beta N\)""
+- ""\(M \longrightarrow_{\beta} N\)"" かつ ""\(N \Longrightarrow_{\beta} R\)"" ならば ""\(M \Longrightarrow_\beta R\)""
+
+%fragments
+- ""\((\lambda x.M)N \Longrightarrow_{1 \beta} [N/x]M\)""
+- ""\(N \Longrightarrow_{1 \beta} R\)"" ならば ""\(MN \Longrightarrow_{1 \beta} MR\)""
+- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば ""\(MR \Longrightarrow_{1 \beta} NR\)""
+- ""\(M \Longrightarrow_{1 \beta} N\)"" ならば ""\(\lambda x.M \Longrightarrow_{1 \beta} \lambda x. N\)""
 = 例
 
 β-変形をする例を示します。
 
 %fragments
 - ""\((\lambda xy.x) \alpha \beta\)""
-- ""\(\Longrightarrow_{\beta 1} (\lambda y.\alpha) \beta\)""
-- ""\(\Longrightarrow_{\beta 1} \alpha\)""
+- ""\(\Longrightarrow_{1 \beta} (\lambda y.\alpha) \beta\)""
+- ""\(\Longrightarrow_{1 \beta} \alpha\)""
 
 = Haskell で…
 
@@ -226,13 +253,13 @@ Haskell で説明するとこんな感じです。
 
 = ベータ正規形
 
-""\(M \Longrightarrow_{\beta 1} N\)"" となるような ""\(N\)"" が存在しないとき、""\(M\)""
+""\(M \Longrightarrow_{1 \beta} N\)"" となるような ""\(N\)"" が存在しないとき、""\(M\)""
 はベータ正規形(_β-normal form_)である、といいます。ラムダ項がベータ正規形であるのは、
 そのなかに ""\((\lambda x.M)N\)"" という形の部分をもたないときです。
 
 また、 ""\((\lambda x.M)N\)"" のような部分を _β-redex_ といいます。
 
-""\(M \Longrightarrow_{\beta 1} N\)"" となるような ""\(N\)"" が存在し、かつ
+""\(M \Longrightarrow_{\beta} N\)"" となるような ""\(N\)"" が存在し、かつ
 ""\(N\)"" がβ-正規形とき、 ""\(M\)"" はβ-正規形 ""\(N\)"" を持つといいます。
 
 = 例
@@ -270,22 +297,22 @@ Scheme Reports や、 Ruby の文化では、よく +"=>"+ という記号を使
 %fragments
 - ""\(first (pair\;\alpha\;\beta)\)""
 - ""\(\equiv (\lambda p.p (\lambda x y.x)) (pair\;\alpha\;\beta)\)""
-- ""\(\Longrightarrow_{\beta 1} [(pair\;\alpha\;\beta)/p](p (\lambda x y.x))\)""
+- ""\(\Longrightarrow_{1 \beta} [(pair\;\alpha\;\beta)/p](p (\lambda x y.x))\)""
 - ""\(\equiv (pair\;\alpha\;\beta) (\lambda x y.x)\)""
 - ""\(\equiv ((\lambda x y z.z x y) \alpha \beta) (\lambda x y.x)\)""
-- ""\(\Longrightarrow_{\beta 1} (([\alpha/x](\lambda y z.z x y)) \beta) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_{1 \beta} (([\alpha/x](\lambda y z.z x y)) \beta) (\lambda x y.x)\)""
 - ""\(\equiv ((\lambda y z.z \alpha y) \beta) (\lambda x y.x)\)""
-- ""\(\Longrightarrow_{\beta 1} ([\beta/y](\lambda z.z \alpha y)) (\lambda x y.x)\)""
+- ""\(\Longrightarrow_{1 \beta} ([\beta/y](\lambda z.z \alpha y)) (\lambda x y.x)\)""
 
 = 簡約2
 
 %fragments
 - ""\(\equiv (\lambda z.z \alpha \beta) (\lambda x y.x)\)""
-- ""\(\Longrightarrow_{\beta 1} [(\lambda x y.x)/z](z \alpha \beta)\)""
+- ""\(\Longrightarrow_{1 \beta} [(\lambda x y.x)/z](z \alpha \beta)\)""
 - ""\(\equiv (\lambda x y.x)\alpha\beta\)""
-- ""\(\Longrightarrow_{\beta 1} ([\alpha/x](\lambda y.x))\beta\)""
+- ""\(\Longrightarrow_{1 \beta} ([\alpha/x](\lambda y.x))\beta\)""
 - ""\(\equiv (\lambda y.\alpha)\beta\)""
-- ""\(\Longrightarrow_{\beta 1} [\beta/y]\alpha\)""
+- ""\(\Longrightarrow_{1 \beta} [\beta/y]\alpha\)""
 - ""\(\equiv \alpha\)""
 
 = CHAPTER 2
