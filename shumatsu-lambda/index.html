@@ -63,13 +63,13 @@ pre, code {
 </li><li class="fragment"> \(M\) と \(N\) がラムダ項ならば \((M N)\) はラムダ項である。
 この形のラムダ項を適用(<em>application</em>)という
 </li><li class="fragment"> \(M\) がラムダ項で \(x\) が変数ならば \((\lambda x.M)\) はラムダ項である。
-この形のラムダ項を抽象(<em>abstraction</em>)という</li></ol><p></p></section><section> <h2> 自由変数と束縛変数</h2><p>ラムダ項の変数(</p><em>variable</em>)は2種類あります。一方は自由変数(<em>free variable</em>)で、
-他方は束縛変数(<em>bound variable</em>)です。
-たとえば、次のラムダ項には、自由変数 \(y\) と束縛変数
-\(x\) が出現しています<p>\[\lambda x.xy\]</p><p></p></section><section> <h2> 記法の約束</h2><p>カッコは適当に省略します。
+この形のラムダ項を抽象(<em>abstraction</em>)という</li></ol><p></p></section><section> <h2> 記法の約束</h2><p>カッコは適当に省略します。
 適用は左結合であり、抽象よりも優先されます。たとえば、 \(\lambda x.MNR\) は
 \((\lambda x.((MN)R))\) の省略です。 また、 \(\lambda x.\lambda y.\lambda z.M\) を
-\(\lambda xyz.M\) と略します。</p><p></p></section><section> <h2> 変数の集合</h2><p></p><strong>定義 1.2 変数の集合</strong><p>ラムダ項 \(M\) に含まれる変数の集合 \(V(M)\) を次のように帰納的に定義します</p><p></p><ol>
+\(\lambda xyz.M\) と略します。</p><p></p></section><section> <h2> 自由変数と束縛変数</h2><p>ラムダ項の変数(</p><em>variable</em>)は2種類あります。一方は自由変数(<em>free variable</em>)で、
+他方は束縛変数(<em>bound variable</em>)です。
+たとえば、次のラムダ項には、自由変数 \(y\) と束縛変数
+\(x\) が出現しています<p>\[\lambda x.xy\]</p><p></p></section><section> <h2> 変数の集合</h2><p></p><strong>定義 1.2 変数の集合</strong><p>ラムダ項 \(M\) に含まれる変数の集合 \(V(M)\) を次のように帰納的に定義します</p><p></p><ol>
 <li class="fragment"> \(x\) が変数ならば \(V(x) = \{x\}\)
 </li><li class="fragment"> \(M\) と \(N\) がラムダ項ならば \(V(MN) = V(M) \cup V(N)\)
 </li><li class="fragment"> \(M\) がラムダ項で \(x\) が変数ならば \(V(\lambda x.M) = V(M) \cup \{x\}\)</li></ol><p></p></section><section> <h2> 自由変数の集合</h2><p></p><strong>定義 1.3 自由変数の集合</strong><p>ラムダ項 \(M\) に含まれる自由変数の集合 \(FV(M)\) を次のように帰納的に定義します</p><p></p><ol>
