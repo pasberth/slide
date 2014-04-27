@@ -112,12 +112,7 @@ pre, code {
 </li><li class="fragment"> \(M \Longrightarrow_{1 \beta} N\) ならば \(\lambda x.M \Longrightarrow_{1 \beta} \lambda x. N\)</li></ol><p></p></section><section> <h2> ベータ変形2</h2><p>β-変形の関係 \(M \longrightarrow_{\beta} N\) を次のように定義します。</p><p>- \(M \Longrightarrow_{1 \beta} N\) ならば  \(M \longrightarrow_{\beta} N\)</p><p></p></section><section> <h2> ベータ変形3</h2><p>ラムダ項 \(M\) をnステップ簡約して得られるラムダ項 \(N\) を表す
 β-変形の関係 \(M \Longrightarrow_\beta N\) を次のように帰納的に定義します。</p><p></p><ol>
 <li class="fragment"> \(M \longrightarrow_{\beta} N\) ならば \(M \Longrightarrow_\beta N\)
-</li><li class="fragment"> \(M \longrightarrow_{\beta} N\) かつ \(N \Longrightarrow_{\beta} R\) ならば \(M \Longrightarrow_\beta R\)</li></ol><p></p><ol>
-<li class="fragment"> \((\lambda x.M)N \Longrightarrow_{1 \beta} [N/x]M\)
-</li><li class="fragment"> \(N \Longrightarrow_{1 \beta} R\) ならば \(MN \Longrightarrow_{1 \beta} MR\)
-</li><li class="fragment"> \(M \Longrightarrow_{1 \beta} N\) ならば \(MR \Longrightarrow_{1 \beta} NR\)
-</li><li class="fragment"> \(M \Longrightarrow_{1 \beta} N\) ならば \(\lambda x.M \Longrightarrow_{1 \beta} \lambda x. N\)
-</li></ol></section><section> <h2> 例</h2><p>β-変形をする例を示します。</p><p></p><ol>
+</li><li class="fragment"> \(M \longrightarrow_{\beta} N\) かつ \(N \Longrightarrow_{\beta} R\) ならば \(M \Longrightarrow_\beta R\)</li></ol><p></p></section><section> <h2> 例</h2><p>β-変形をする例を示します。</p><p></p><ol>
 <li class="fragment"> \((\lambda xy.x) \alpha \beta\)
 </li><li class="fragment"> \(\Longrightarrow_{1 \beta} (\lambda y.\alpha) \beta\)
 </li><li class="fragment"> \(\Longrightarrow_{1 \beta} \alpha\)</li></ol><p></p></section><section> <h2> Haskell で…</h2><p>Haskell で説明するとこんな感じです。</p><p></p><pre>&#10;(\x y -> x) a b&#10;== (\y -> a) b&#10;== a</pre><p></p></section><section> <h2> ベータ正規形</h2><p>\(M \Longrightarrow_{1 \beta} N\) となるような \(N\) が存在しないとき、\(M\)
