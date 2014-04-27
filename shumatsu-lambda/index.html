@@ -86,7 +86,7 @@ pre, code {
 </li><li class="fragment"> \([N/x](\lambda y.Q) \equiv \lambda z.[N/x][z/y]Q\) <br />
   (ただし \(z \not \in V(N(\lambda xy.Q))\))</li></ol><p></p></section><section> <h2> 例1</h2><p>代入をする例を示します。
 代入というのは簡単に申しますれば、変数をひとつ直接置き換えてしまう
-ということです。</p><p>\[[\alpha/x](\lambda yz.zxy) \equiv \lambda yz.z\;\alpha\;y\]</p><p></p></section><section> <h2> 例2</h2><p>代入はすこしテクニカルな操作です。たとえば、</p><p>\[[y/x](\lambda y.xy)\]</p><p>を考えてみます。 \(x\) を \(y\) に置き換えるという
+ということです。</p><p>\[[M/x](\lambda yz.zxy) \equiv \lambda yz.zMy\]</p><p></p></section><section> <h2> 例2</h2><p>代入はすこしテクニカルな操作です。たとえば、</p><p>\[[y/x](\lambda y.xy)\]</p><p>を考えてみます。 \(x\) を \(y\) に置き換えるという
 操作を素朴にすると、
 \[\lambda y.yy\] になるかもしれませんが、これはおかしいです。</p><p>そこで、定義1.5の4番めの規則で、</p><p>\[[y/x](\lambda y.xy) \equiv \lambda z.yz\]</p><p>となるようにします。</p><p></p></section><section> <h2> ちなみに…</h2><p>代入をどのように書くかというのは人それぞれのスタイルがあるようです。
 型システム入門では \([x \mapsto N]M\) と書かれています。
