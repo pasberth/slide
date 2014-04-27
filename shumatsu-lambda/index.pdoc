@@ -130,7 +130,7 @@
 代入というのは簡単に申しますれば、変数をひとつ直接置き換えてしまう
 ということです。
 
-""\[[\alpha/x](\lambda yz.zxy) \equiv \lambda yz.z\;\alpha\;y\]""
+""\[[M/x](\lambda yz.zxy) \equiv \lambda yz.zMy\]""
 
 = 例2
 
