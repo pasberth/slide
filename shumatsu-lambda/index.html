@@ -101,8 +101,8 @@ pre, code {
 つまり
 \[\lambda z.z \equiv_\alpha \lambda z.z\]
 が成り立てばよいからであります。そしてそれは、
-ひとつめの規則によってただちに成り立つことがわかります</p><p></p></section><section> <h2> 例2</h2><p>次のラムダ項は アルファ同値の関係にはありません</p><p>\[x \not \equiv_\alpha y\]</p><p>なんとなれば、どの規則を当てはめようと、これが成り立つことにはならないからです。</p><p></p></section><section> <h2> ベータ変形</h2><p></p><strong>定義 1.7 β-変形(<em>β-reduction</em>)</strong><p>ラムダ項 \(M\) を評価(</p><em>evaluate</em>)して得られるラムダ項 \(N\) を表す
-β-変形の関係 \(M \Longrightarrow_{\beta 1} N\) を次のように帰納的に定義します。<p></p><ol>
+ひとつめの規則によってただちに成り立つことがわかります</p><p></p></section><section> <h2> 例2</h2><p>次のラムダ項は アルファ同値の関係にはありません</p><p>\[x \not \equiv_\alpha y\]</p><p>なんとなれば、どの規則を当てはめようと、これが成り立つことにはならないからです。</p><p></p></section><section> <h2> ベータ変形</h2><p></p><strong>定義 1.7 β-変形(<em>β-reduction</em>)</strong><p>ラムダ項 \(M\) を簡約して得られるラムダ項 \(N\) を表す
+β-変形の関係 \(M \Longrightarrow_{\beta 1} N\) を次のように帰納的に定義します。</p><p></p><ol>
 <li class="fragment"> \((\lambda x.M)N \Longrightarrow_{\beta 1} [N/x]M\)
 </li><li class="fragment"> \(N \Longrightarrow_{\beta 1} R\) ならば \(MN \Longrightarrow_{\beta 1} MR\)
 </li><li class="fragment"> \(M \Longrightarrow_{\beta 1} N\) ならば \(MR \Longrightarrow_{\beta 1} NR\)
