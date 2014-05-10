@@ -116,7 +116,7 @@ alert s = js_alert $ F.toJSString s
 main = alert "hello world"</pre><p></p></section><section> <h2> 解説7</h2><p>関数の型。
 </p><strong>a -&gt; b</strong>, <strong>()</strong>, <strong>IO a</strong>, <strong>T.JSString</strong>, <strong>T.JSNumber</strong>
 などを組み合わせた型をつけられます。
-都合 String や Int などの型はつけられません。<p></p><pre>
+JavaScript が扱えない値であるHaskellのStringなどの型はつけられません。<p></p><pre>
 import qualified GHCJS.Types    as T
 import qualified GHCJS.Foreign  as F
 &#10;foreign import javascript unsafe "alert($1)" js_alert :: <strong>T.JSString -&gt; IO ()</strong>
@@ -150,13 +150,14 @@ vagrant@precise32:<sub>$ cabal install lens <strong>--ghcjs</strong></sub></pre>
 <li> GHCJS の吐く js はめっちゃでかい
 </li><li> all.js は 1.6M くらいあります</li></ul><p></p></section><section> <h2> パフォーマンス</h2><p></p><ul>
 <li> とにかくメモリを食う
+</li><li> CPU パワーも必要
 </li><li> いろいろ処理すると重くなる
 </li><li> -O2 をつければそれなりに動く</li></ul><p></p></section><section> <h2> 環境整備が難しい</h2><p></p><ul>
 <li> 根本的な問題としてインストールが難しい
 </li><li> 冒頭の方法でうまくいくかもしれないけどハマるかもしれない
 </li><li> ライブラリはなんでも動くとはいうけれど dependency hell は避けられない
 </li><li> 現実は厳しい</li></ul><p></p></section><section> <h2> まとめ</h2><p></p><ul>
-<li> GHCJS は GHC のすべての機能がブラウザ上で動く夢の処理系
+<li> GHCJS は GHC の(ほとんど)すべての機能がブラウザ上で動く夢の処理系
 </li><li> 軽量な altJS ではない。使いこなすのは難しい</li></ul><p></p></section><section> <h2> ご清聴ありがとうございました
 </h2></section>
 </div>
