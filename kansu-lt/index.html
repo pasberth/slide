@@ -56,7 +56,7 @@ pre, code {
   というリポジトリに Vagrantfile があります。
 </li><li> 環境によってはハマることもありますが手元の環境だと簡単でした。</li></ul><p></p></section><section> <h2> バイナリをダウンロードする方法</h2><p></p></section><section> <h2> Requirements</h2><p></p><ul>
 <li> <a href="https://www.virtualbox.org/">VirtualBox</a> をインストールします
-</li><li> <a href="http://www.vagrantup.com/">Vagrant</a> をインストールしのす
+</li><li> <a href="http://www.vagrantup.com/">Vagrant</a> をインストールします
 </li><li> git をインストールしていない人は (いないと思いますが) します</li></ul><p></p></section><section> <h2> ghcjs-build</h2><p>ghcjs-buildという便利なリポジトリがあるので、それを
 利用してGHCJSをインストールします。</p><p></p><pre>&#10;git&nbsp;clone&nbsp;https://github.com/ghcjs/ghcjs-build.git&#10;cd&nbsp;ghcjs-build&#10;git&nbsp;checkout&nbsp;prebuilt&#10;vagrant&nbsp;up</pre><p></p></section><section> <h2> インストール完了！</h2><p>簡単ですね！</p><p></p><pre>&#10;vagrant&nbsp;ssh&#10;Welcome&nbsp;to&nbsp;Ubuntu&nbsp;12.04&nbsp;LTS&nbsp;(GNU/Linux&nbsp;3.2.0-23-generic-pae&nbsp;i686)&#10;&#10;&nbsp;*&nbsp;Documentation:&nbsp;&nbsp;https://help.ubuntu.com/&#10;Welcome&nbsp;to&nbsp;your&nbsp;Vagrant-built&nbsp;virtual&nbsp;machine.&#10;Last&nbsp;login:&nbsp;Fri&nbsp;Sep&nbsp;14&nbsp;06:22:31&nbsp;2012&nbsp;from&nbsp;10.0.2.2&#10;vagrant@precise32:~$&nbsp;which&nbsp;ghcjs&#10;/home/vagrant/.cabal/bin/ghcjs&#10;vagrant@precise32:~$&#10;</pre><p></p></section><section> <h2> GHCJSの概観</h2><p></p></section><section> <h2> hello world</h2><p>hello world してみましょう！</p><p></p><pre>&#10;vagrant@precise32:~$&nbsp;nano&nbsp;hello.hs&#10;vagrant@precise32:~$&nbsp;cat&nbsp;hello.hs&#10;main&nbsp;=&nbsp;putStrLn&nbsp;"hello&nbsp;world"&#10;vagrant@precise32:~$&nbsp;ghcjs&nbsp;hello.hs&#10;generating&nbsp;native&#10;[1&nbsp;of&nbsp;1]&nbsp;Compiling&nbsp;Main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;hello.hs,&nbsp;hello.o&nbsp;)&#10;generating&nbsp;JavaScript&#10;[1&nbsp;of&nbsp;1]&nbsp;Compiling&nbsp;Main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;hello.hs,&nbsp;hello.js_o&nbsp;)&#10;Linking&nbsp;hello.jsexe&nbsp;(Main)&#10;vagrant@precise32:~$&nbsp;node&nbsp;hello.jsexe/all.js&#10;hello&nbsp;world&#10;vagrant@precise32:~$&#10;</pre><p></p></section><section> <h2> 実行の仕方</h2><p></p><ul>
 <li> コンパイルすると hello.jsexe というディレクトリができる
@@ -151,11 +151,14 @@ vagrant@precise32:<sub>$ cabal install lens <strong>--ghcjs</strong></sub></pre>
 </li><li> all.js は 1.6M くらいあります</li></ul><p></p></section><section> <h2> パフォーマンス</h2><p></p><ul>
 <li> とにかくメモリを食う
 </li><li> いろいろ処理すると重くなる
-</li><li> -O2 をつければそれなりに動く
+</li><li> -O2 をつければそれなりに動く</li></ul><p></p></section><section> <h2> 環境整備が難しい</h2><p></p><ul>
+<li> 根本的な問題としてインストールが難しい
+</li><li> 冒頭の方法でうまくいくかもしれないけどハマるかもしれない
+</li><li> ライブラリはなんでも動くとはいうけれど dependency hell は避けられない
 </li><li> 現実は厳しい</li></ul><p></p></section><section> <h2> まとめ</h2><p></p><ul>
 <li> GHCJS は GHC のすべての機能がブラウザ上で動く夢の処理系
-</li><li> 軽量な altJS ではない。使いこなすのは難しい</li></ul><p></p></section><section> <h2> ご清聴ありがとうございました</h2><p></p><ul>
-</ul></section>
+</li><li> 軽量な altJS ではない。使いこなすのは難しい</li></ul><p></p></section><section> <h2> ご清聴ありがとうございました
+</h2></section>
 </div>
 </div>
 </body>
