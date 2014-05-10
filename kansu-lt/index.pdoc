@@ -357,5 +357,3 @@ main = runWebGUI $ \ webView -> do
 - 軽量な altJS ではない。使いこなすのは難しい
 
 = ご清聴ありがとうございました
-
-%ul
