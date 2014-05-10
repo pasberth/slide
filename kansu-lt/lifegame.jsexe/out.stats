@@ -1,0 +1,101 @@
+code size summary per package:
+
+base:                    530253
+ghc-prim:                4366
+ghcjs-prim:              7455
+integer-gmp:             2785
+main:                    71923
+text-1.1.0.0:            13726
+vector-0.10.9.1:         9070
+
+
+code size per module:
+
+base
+    Control.Exception.Base:             7762
+    Data.Dynamic:                       300
+    Data.List:                          609
+    Data.Maybe:                         493
+    Data.Tuple:                         234
+    Data.Typeable:                      922
+    Data.Typeable.Internal:             3750
+    Foreign.C.Error:                    13385
+    Foreign.C.String:                   3229
+    Foreign.Marshal.Alloc:              1055
+    Foreign.Marshal.Array:              2603
+    Foreign.Storable:                   13238
+    GHC.Arr:                            4621
+    GHC.Base:                           4966
+    GHC.Char:                           802
+    GHC.Conc.Signal:                    5075
+    GHC.Conc.Sync:                      5245
+    GHC.Enum:                           382
+    GHC.Err:                            289
+    GHC.Event.IntTable:                 9698
+    GHC.Event.Internal:                 663
+    GHC.Event.Manager:                  21047
+    GHC.Event.Thread:                   36462
+    GHC.Exception:                      6658
+    GHC.Fingerprint:                    2206
+    GHC.Fingerprint.Type:               912
+    GHC.Foreign:                        12395
+    GHC.ForeignPtr:                     2063
+    GHC.IO:                             4527
+    GHC.IO.Buffer:                      1671
+    GHC.IO.BufferedIO:                  1266
+    GHC.IO.Device:                      2489
+    GHC.IO.Encoding:                    10833
+    GHC.IO.Encoding.Failure:            10284
+    GHC.IO.Encoding.Iconv:              18900
+    GHC.IO.Encoding.Types:              2045
+    GHC.IO.Encoding.UTF16:              40881
+    GHC.IO.Encoding.UTF32:              34150
+    GHC.IO.Encoding.UTF8:               62418
+    GHC.IO.Exception:                   37628
+    GHC.IO.FD:                          45021
+    GHC.IO.Handle:                      805
+    GHC.IO.Handle.FD:                   7640
+    GHC.IO.Handle.Internals:            29591
+    GHC.IO.Handle.Types:                5329
+    GHC.Int:                            979
+    GHC.List:                           6624
+    GHC.MVar:                           259
+    GHC.Ptr:                            536
+    GHC.ST:                             242
+    GHC.STRef:                          269
+    GHC.Show:                           8354
+    GHC.Storable:                       1238
+    GHC.TopHandler:                     16793
+    GHC.Word:                           1269
+    System.Posix.Internals:             17148
+
+ghc-prim
+    GHC.CString:                        1991
+    GHC.IntWord64:                      253
+    GHC.Tuple:                          885
+    GHC.Types:                          1237
+
+ghcjs-prim
+    GHCJS.Prim:                         7455
+
+integer-gmp
+    GHC.Integer.GMP.Prim:               311
+    GHC.Integer.Type:                   2474
+
+main
+    Main:                               71923
+
+text-1.1.0.0
+    Data.Text:                          10874
+    Data.Text.Array:                    1420
+    Data.Text.Internal:                 1432
+
+vector-0.10.9.1
+    Data.Vector:                        1484
+    Data.Vector.Internal.Check:         6030
+    Data.Vector.Mutable:                1556
+
+
+
+packed metadata: 74952
+

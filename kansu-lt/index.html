@@ -1,0 +1,162 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.min.css">
+<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/simple.css" id="theme">
+<script src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
+<script src="http://lab.hakim.se/reveal-js/js/reveal.min.js"></script>
+<script type="text/javascript">
+  window.addEventListener("load", function () {
+  Reveal.initialize({
+    transition: 'linear',
+    backgroundTransition: 'slide'
+  });
+})
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<style type="text/css">
+pre, code {
+  font-family: "Source Code Pro", "Bitstream Vera Sans Mono", "Consolas", "Liberation Mono", Courier, monospace !important;
+}
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section> <h2> GHCJS</h2><p></p></section><section> <h2> 自己紹介</h2><p></p><ul>
+<li> Twitter: <a href="https://twitter.com/pasberth">@pasberth</a>
+</li><li> 興味: プログラミング言語(関数型), 型システム
+</li><li> Haskell が好き</li></ul><p></p></section><section> <h2> GHCJSとは</h2><p></p><ul>
+<li> HaskellをJavaScriptにコンパイルできる
+</li><li> GHCの機能(言語拡張,ライブラリ,etc…)がなんでも使える
+</li><li> ライバル: Haste, Js_of_ocaml, Scala.js …</li></ul><p></p></section><section> <h2> 導入編</h2><p></p></section><section> <h2> Installation</h2><p>方法は2つあります:</p><p></p><ul>
+<li> ソースをビルドする方法
+</li><li> <a href="http://weblog.luite.com/wordpress/">バイナリをダウンロードする方法</a></li></ul><p></p></section><section> <h2> ソースをビルドする</h2><p></p><ul>
+<li> <a href="https://github.com/ghcjs/ghcjs">ghcjs/ghcjs</a>
+  というリポジトリの README にソースコードから
+  ビルドする手順がかかれています。
+</li><li> わりとイバラの道です。覚悟を決めてインストール
+  に望みましょう。</li></ul><p></p></section><section> <h2> バイナリをダウンロードする</h2><p></p><ul>
+<li> <a href="https://github.com/ghcjs/ghcjs-build">ghcjs/ghcjs-build</a>
+  というリポジトリに Vagrantfile があります。
+</li><li> 環境によってはハマることもありますが手元の環境だと簡単でした。</li></ul><p></p></section><section> <h2> バイナリをダウンロードする方法</h2><p></p></section><section> <h2> Requirements</h2><p></p><ul>
+<li> <a href="https://www.virtualbox.org/">VirtualBox</a> をインストールします
+</li><li> <a href="http://www.vagrantup.com/">Vagrant</a> をインストールしのす
+</li><li> git をインストールしていない人は (いないと思いますが) します</li></ul><p></p></section><section> <h2> ghcjs-build</h2><p>ghcjs-buildという便利なリポジトリがあるので、それを
+利用してGHCJSをインストールします。</p><p></p><pre>&#10;git&nbsp;clone&nbsp;https://github.com/ghcjs/ghcjs-build.git&#10;cd&nbsp;ghcjs-build&#10;git&nbsp;checkout&nbsp;prebuilt&#10;vagrant&nbsp;up</pre><p></p></section><section> <h2> インストール完了！</h2><p>簡単ですね！</p><p></p><pre>&#10;vagrant&nbsp;ssh&#10;Welcome&nbsp;to&nbsp;Ubuntu&nbsp;12.04&nbsp;LTS&nbsp;(GNU/Linux&nbsp;3.2.0-23-generic-pae&nbsp;i686)&#10;&#10;&nbsp;*&nbsp;Documentation:&nbsp;&nbsp;https://help.ubuntu.com/&#10;Welcome&nbsp;to&nbsp;your&nbsp;Vagrant-built&nbsp;virtual&nbsp;machine.&#10;Last&nbsp;login:&nbsp;Fri&nbsp;Sep&nbsp;14&nbsp;06:22:31&nbsp;2012&nbsp;from&nbsp;10.0.2.2&#10;vagrant@precise32:~$&nbsp;which&nbsp;ghcjs&#10;/home/vagrant/.cabal/bin/ghcjs&#10;vagrant@precise32:~$&#10;</pre><p></p></section><section> <h2> GHCJSの概観</h2><p></p></section><section> <h2> hello world</h2><p>hello world してみましょう！</p><p></p><pre>&#10;vagrant@precise32:~$&nbsp;nano&nbsp;hello.hs&#10;vagrant@precise32:~$&nbsp;cat&nbsp;hello.hs&#10;main&nbsp;=&nbsp;putStrLn&nbsp;"hello&nbsp;world"&#10;vagrant@precise32:~$&nbsp;ghcjs&nbsp;hello.hs&#10;generating&nbsp;native&#10;[1&nbsp;of&nbsp;1]&nbsp;Compiling&nbsp;Main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;hello.hs,&nbsp;hello.o&nbsp;)&#10;generating&nbsp;JavaScript&#10;[1&nbsp;of&nbsp;1]&nbsp;Compiling&nbsp;Main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;hello.hs,&nbsp;hello.js_o&nbsp;)&#10;Linking&nbsp;hello.jsexe&nbsp;(Main)&#10;vagrant@precise32:~$&nbsp;node&nbsp;hello.jsexe/all.js&#10;hello&nbsp;world&#10;vagrant@precise32:~$&#10;</pre><p></p></section><section> <h2> 実行の仕方</h2><p></p><ul>
+<li> コンパイルすると hello.jsexe というディレクトリができる
+</li><li> hello.jsexe/all.js というものが実際のスクリプトなので
+  これを node で動かすなり &lt;script&gt; タグでリンクするなりする</li></ul><p></p></section><section> <h2> FFI</h2><p></p><ul>
+<li> GHCJS を altJS として使うとすれば当然外部ライブラリも使うわけです
+</li><li> となると FFI が簡単にできるかどうか気になるところです</li></ul><p></p></section><section> <h2> alert を呼び出してみる</h2><p></p><pre>import&nbsp;qualified&nbsp;GHCJS.Types&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;T&#10;import&nbsp;qualified&nbsp;GHCJS.Foreign&nbsp;&nbsp;as&nbsp;F&#10;&#10;foreign&nbsp;import&nbsp;javascript&nbsp;unsafe&nbsp;"alert($1)"&nbsp;js_alert&nbsp;::&nbsp;T.JSString&nbsp;-&gt;&nbsp;IO&nbsp;()&#10;&#10;alert&nbsp;::&nbsp;String&nbsp;-&gt;&nbsp;IO&nbsp;()&#10;alert&nbsp;s&nbsp;=&nbsp;js_alert&nbsp;$&nbsp;F.toJSString&nbsp;s&#10;&#10;main&nbsp;::&nbsp;IO&nbsp;()&#10;main&nbsp;=&nbsp;alert&nbsp;"hello&nbsp;world"&#10;</pre><p></p></section><section> <h2> 解説1</h2><p></p><a href="https://github.com/ghcjs/ghcjs-base/blob/master/GHCJS/Types.hs">GHCJS/Types</a>
+を import しています。ここには JSNumber, JSString
+などの型が定義されています<p></p><pre>
+<strong>import qualified GHCJS.Types    as T</strong>
+import qualified GHCJS.Foreign  as F
+&#10;foreign import javascript unsafe "alert($1)" js_alert :: T.JSString -&gt; IO ()
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> 解説2</h2><p></p><a href="https://github.com/ghcjs/ghcjs-base/blob/master/GHCJS/Foreign.hs">GHCJS/Foreign</a>
+を import しています。ここには toJSString, fromJSString
+などの変換関数が定義されています<p></p><pre>
+import qualified GHCJS.Types    as T
+<strong>import qualified GHCJS.Foreign  as F</strong>
+&#10;foreign import javascript unsafe "alert($1)" js_alert :: T.JSString -&gt; IO ()
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> 解説3</h2><p>JavaScript の alert を Haskell から
+呼び出せるようにしています</p><p></p><pre>
+import qualified GHCJS.Types    as T
+import qualified GHCJS.Foreign  as F
+&#10;<strong>foreign import javascript unsafe "alert($1)" js_alert :: T.JSString -&gt; IO ()</strong>
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> 解説4</h2><p>スレッドセーフか否か。スレッドセーフなら
+</p><strong>safe</strong> 、そうでないなら <strong>unsafe</strong> にします<p></p><pre>
+import qualified GHCJS.Types    as T
+import qualified GHCJS.Foreign  as F
+&#10;foreign import javascript <strong>unsafe</strong> "alert($1)" js_alert :: T.JSString -&gt; IO ()
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> 解説5</h2><p>対応する JavaScript のコード。
+</p><strong>$1</strong>, <strong>$2</strong>…, <strong>$n</strong> に引数が入ります。<p></p><pre>
+import qualified GHCJS.Types    as T
+import qualified GHCJS.Foreign  as F
+&#10;foreign import javascript unsafe <strong>"alert($1)"</strong> js_alert :: T.JSString -&gt; IO ()
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> 解説6</h2><p>Haskell のコードから見える関数の名前。
+通例 </p><strong>js_</strong> というプレフィクスをつけます<p></p><pre>
+import qualified GHCJS.Types    as T
+import qualified GHCJS.Foreign  as F
+&#10;foreign import javascript unsafe "alert($1)" <strong>js_alert</strong> :: T.JSString -&gt; IO ()
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> 解説7</h2><p>関数の型。
+</p><strong>a -&gt; b</strong>, <strong>()</strong>, <strong>IO a</strong>, <strong>T.JSString</strong>, <strong>T.JSNumber</strong>
+などを組み合わせた型をつけられます。
+都合 String や Int などの型はつけられません。<p></p><pre>
+import qualified GHCJS.Types    as T
+import qualified GHCJS.Foreign  as F
+&#10;foreign import javascript unsafe "alert($1)" js_alert :: <strong>T.JSString -&gt; IO ()</strong>
+&#10;alert :: String -&gt; IO ()
+alert s = js_alert $ F.toJSString s
+&#10;main :: IO ()
+main = alert "hello world"</pre><p></p></section><section> <h2> Haskell のライブラリを使う</h2><p></p></section><section> <h2> GHCJSの強み</h2><p></p><ul>
+<li> GHCで使えるライブラリが基本的になんでも使える
+</li><li> たとえば Lens, Operational も使える！</li></ul><p></p></section><section> <h2> Lens をインストールしてみる</h2><p>cabal のコマンドに </p><strong>--ghcjs</strong> オプションをつけるだけ！<p></p><pre>
+vagrant@precise32:<sub>$ cabal install lens <strong>--ghcjs</strong></sub></pre><p></p></section><section> <h2></h2><p></p><ul>
+<li> Lens が丸ごと JavaScript にコンパイルされる
+</li><li> ヤバい</li></ul><p></p></section><section> <h2> Lens を使ってみる</h2><p></p><pre>
+{-#&nbsp;LANGUAGE&nbsp;TemplateHaskell&nbsp;#-}&#10;&#10;import&nbsp;Control.Lens&#10;&#10;data&nbsp;Foo&nbsp;a&nbsp;=&nbsp;Foo&nbsp;{&nbsp;_bar&nbsp;::&nbsp;a&nbsp;}&#10;makeLenses&nbsp;''Foo&#10;&#10;foo1&nbsp;::&nbsp;Foo&nbsp;String&#10;foo1&nbsp;=&nbsp;Foo&nbsp;{&nbsp;_bar&nbsp;=&nbsp;"baaaar"&nbsp;}&#10;&#10;main&nbsp;::&nbsp;IO&nbsp;()&#10;main&nbsp;=&nbsp;do&#10;&nbsp;&nbsp;putStrLn&nbsp;(foo1&nbsp;^.&nbsp;bar)&#10;</pre><p></p></section><section> <h2></h2><p></p><ul>
+<li> TemplateHaskell が動く
+</li><li> その他言語拡張も動く
+</li><li> ライブラリがなんでも動く
+</li><li> ヤバい</li></ul><p></p></section><section> <h2> DOM をいじってみる</h2><p></p><ul>
+<li> JavaScript といえば DOM
+</li><li> DOM がいじれないと困る
+</li><li> GHCJS で DOM をいじるにはどうすればよいか</li></ul><p></p></section><section> <h2> ghcjs-dom</h2><p></p><ul>
+<li> <a href="https://github.com/ghcjs/ghcjs-dom">ghcjs-dom</a>
+  というリポジトリにいろいろあります
+</li><li> Vagrant でつくった仮想環境にはインストール済み</li></ul><p></p></section><section> <h2> ghcjs-dom-hello</h2><p></p><a href="https://github.com/ghcjs/ghcjs-dom-hello">ghcjs-dom-hello</a>
+というリポジトリにサンプルがあります<p></p><pre>&#10;git&nbsp;clone&nbsp;https://github.com/ghcjs/ghcjs-dom-hello&#10;cd&nbsp;ghcjs-dom-hello&#10;ghcjs&nbsp;src/Main.hs&#10;</pre><p></p></section><section> <h2> ghcj-dom-hello の内容のコピー</h2><p>コードはこんな感じになってます</p><p></p><pre>&#10;import&nbsp;GHCJS.DOM&nbsp;(webViewGetDomDocument,&nbsp;runWebGUI)&#10;import&nbsp;GHCJS.DOM.Document&nbsp;(documentGetBody)&#10;import&nbsp;GHCJS.DOM.HTMLElement&nbsp;(htmlElementSetInnerHTML)&#10;&#10;main&nbsp;=&nbsp;runWebGUI&nbsp;$&nbsp;\&nbsp;webView&nbsp;-&gt;&nbsp;do&#10;&nbsp;&nbsp;&nbsp;&nbsp;Just&nbsp;doc&nbsp;&lt;-&nbsp;webViewGetDomDocument&nbsp;webView&#10;&nbsp;&nbsp;&nbsp;&nbsp;Just&nbsp;body&nbsp;&lt;-&nbsp;documentGetBody&nbsp;doc&#10;&nbsp;&nbsp;&nbsp;&nbsp;htmlElementSetInnerHTML&nbsp;body&nbsp;"&lt;h1&gt;Hello&nbsp;World&lt;/h1&gt;"&nbsp;</pre><p></p></section><section> <h2> jQuery を使ってみる</h2><p></p><ul>
+<li> JavaScript といえば jQuery
+</li><li> jQuery が使えないと困る
+</li><li> GHCJS で jQuery を使うにはどうすればよいか</li></ul><p></p></section><section> <h2> ghcjs-jquery</h2><p></p><ul>
+<li> <a href="https://github.com/ghcjs/ghcjs-jquery">ghcjs-jquery</a>
+  というリポジトリにいろいろあります
+</li><li> Vagrant でつくった仮想環境にはインストール済み</li></ul><p></p></section><section> <h2> ghcjs-jquery を使ってみる</h2><p>とりあえず 使ってみましょう！</p><p></p><pre>{-#&nbsp;LANGUAGE&nbsp;OverloadedStrings&nbsp;#-}&#10;&#10;import&nbsp;JavaScript.JQuery&#10;&#10;main&nbsp;::&nbsp;IO&nbsp;()&#10;main&nbsp;=&nbsp;do&#10;&nbsp;&nbsp;select&nbsp;"body"&nbsp;&gt;&gt;=&nbsp;setHtml&nbsp;"&lt;h1&gt;hello&nbsp;world&lt;/h1&gt;"&#10;&nbsp;&nbsp;return&nbsp;()&#10;</pre><p></p></section><section> <h2> GHCJS の欠点</h2><p></p></section><section> <h2> JavaScript の大きさ</h2><p></p><ul>
+<li> GHCJS の吐く js はめっちゃでかい
+</li><li> all.js は 1.6M くらいあります</li></ul><p></p></section><section> <h2> パフォーマンス</h2><p></p><ul>
+<li> とにかくメモリを食う
+</li><li> いろいろ処理すると重くなる
+</li><li> -O2 をつければそれなりに動く
+</li><li> 現実は厳しい</li></ul><p></p></section><section> <h2> まとめ</h2><p></p><ul>
+<li> GHCJS は GHC のすべての機能がブラウザ上で動く夢の処理系
+</li><li> 軽量な altJS ではない。使いこなすのは難しい</li></ul><p></p></section><section> <h2> ご清聴ありがとうございました</h2><p></p><ul>
+</ul></section>
+</div>
+</div>
+</body>
+</html>
