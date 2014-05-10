@@ -49,7 +49,7 @@
 
 %ul
 - `https://www.virtualbox.org/`VirtualBox` をインストールします
-- `http://www.vagrantup.com/`Vagrant` をインストールしのす
+- `http://www.vagrantup.com/`Vagrant` をインストールします
 - git をインストールしていない人は (いないと思いますが) します
 
 = ghcjs-build
