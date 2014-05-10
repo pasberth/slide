@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.min.css">
 <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/simple.css" id="theme">
 <script src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
