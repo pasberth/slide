@@ -227,7 +227,7 @@ main \= alert \"hello world\"
 関数の型。
 *a -> b*, *()*, *IO a*, *T.JSString*, *T.JSNumber*
 などを組み合わせた型をつけられます。
-都合 String や Int などの型はつけられません。
+JavaScript が扱えない値であるHaskellのStringなどの型はつけられません。
 
 %pre
 import qualified GHCJS.Types    as T
@@ -346,6 +346,7 @@ main = runWebGUI $ \ webView -> do
 
 %ul
 - とにかくメモリを食う
+- CPU パワーも必要
 - いろいろ処理すると重くなる
 - \-O2 をつければそれなりに動く
 
@@ -360,7 +361,7 @@ main = runWebGUI $ \ webView -> do
 = まとめ
 
 %ul
-- GHCJS は GHC のすべての機能がブラウザ上で動く夢の処理系
+- GHCJS は GHC の(ほとんど)すべての機能がブラウザ上で動く夢の処理系
 - 軽量な altJS ではない。使いこなすのは難しい
 
 = ご清聴ありがとうございました
