@@ -100,6 +100,13 @@ hello world
 vagrant@precise32:~$
 """
 
+= 実行の仕方
+
+%ul
+- コンパイルすると hello.jsexe というディレクトリができる
+- hello.jsexe/all.js というものが実際のスクリプトなので
+  これを node で動かすなり <script> タグでリンクするなりする
+
 = FFI
 
 %ul
@@ -267,3 +274,88 @@ vagrant@precise32:~$ cabal install lens *--ghcjs*
 - その他言語拡張も動く
 - ライブラリがなんでも動く
 - ヤバい
+
+= DOM をいじってみる
+
+%ul
+- JavaScript といえば DOM
+- DOM がいじれないと困る
+- GHCJS で DOM をいじるにはどうすればよいか
+
+= ghcjs-dom
+
+%ul
+- `"https://github.com/ghcjs/ghcjs-dom"`"ghcjs-dom"`
+  というリポジトリにいろいろあります
+- Vagrant でつくった仮想環境にはインストール済み
+
+= ghcjs-dom-hello
+
+`https://github.com/ghcjs/ghcjs-dom-hello`ghcjs-dom-hello`
+というリポジトリにサンプルがあります
+
+%pre"""
+git clone https://github.com/ghcjs/ghcjs-dom-hello
+cd ghcjs-dom-hello
+ghcjs src/Main.hs
+"""
+
+= ghcj-dom-hello の内容のコピー
+
+コードはこんな感じになってます
+
+%pre"""
+import GHCJS.DOM (webViewGetDomDocument, runWebGUI)
+import GHCJS.DOM.Document (documentGetBody)
+import GHCJS.DOM.HTMLElement (htmlElementSetInnerHTML)
+
+main = runWebGUI $ \ webView -> do
+    Just doc <- webViewGetDomDocument webView
+    Just body <- documentGetBody doc
+    htmlElementSetInnerHTML body "<h1>Hello World</h1>" """
+
+= jQuery を使ってみる
+
+%ul
+- JavaScript といえば jQuery
+- jQuery が使えないと困る
+- GHCJS で jQuery を使うにはどうすればよいか
+
+= ghcjs-jquery
+
+%ul
+- `"https://github.com/ghcjs/ghcjs-jquery"`"ghcjs-jquery"`
+  というリポジトリにいろいろあります
+- Vagrant でつくった仮想環境にはインストール済み
+
+= ghcjs-jquery を使ってみる
+
+とりあえず 使ってみましょう！
+
+%pre%read use-jquery.hs
+
+= GHCJS の欠点
+
+= JavaScript の大きさ
+
+%ul
+- GHCJS の吐く js はめっちゃでかい
+- all.js は 1.6M くらいあります
+
+= パフォーマンス
+
+%ul
+- とにかくメモリを食う
+- いろいろ処理すると重くなる
+- \-O2 をつければそれなりに動く
+- 現実は厳しい
+
+= まとめ
+
+%ul
+- GHCJS は GHC のすべての機能がブラウザ上で動く夢の処理系
+- 軽量な altJS ではない。使いこなすのは難しい
+
+= ご清聴ありがとうございました
+
+%ul

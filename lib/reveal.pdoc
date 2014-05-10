@@ -1,6 +1,7 @@
 %include ../paradocs/lib/stdhtml.pdoc
 
 %rule reveal
+  %extend html
   %before %"""
 <!DOCTYPE html>
 <html>
