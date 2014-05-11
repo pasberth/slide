@@ -128,17 +128,6 @@ vagrant@precise32:~$ cabal install lens *--ghcjs*
 =
 
 %ul
-- Lens が丸ごと JavaScript にコンパイルされる
-- ヤバい
-
-= Lens を使ってみる
-
-%pre
-%read use-lens.hs
-
-=
-
-%ul
 - TemplateHaskell が動く
 - その他言語拡張も動く
 - ライブラリがなんでも動く
@@ -169,20 +158,6 @@ cd ghcjs-dom-hello
 ghcjs src/Main.hs
 """
 
-= ghcj-dom-hello の内容のコピー
-
-コードはこんな感じになってます
-
-%pre"""
-import GHCJS.DOM (webViewGetDomDocument, runWebGUI)
-import GHCJS.DOM.Document (documentGetBody)
-import GHCJS.DOM.HTMLElement (htmlElementSetInnerHTML)
-
-main = runWebGUI $ \ webView -> do
-    Just doc <- webViewGetDomDocument webView
-    Just body <- documentGetBody doc
-    htmlElementSetInnerHTML body "<h1>Hello World</h1>" """
-
 = jQuery を使ってみる
 
 %ul
@@ -196,12 +171,6 @@ main = runWebGUI $ \ webView -> do
 - `"https://github.com/ghcjs/ghcjs-jquery"`"ghcjs-jquery"`
   というリポジトリにいろいろあります
 - Vagrant でつくった仮想環境にはインストール済み
-
-= ghcjs-jquery を使ってみる
-
-とりあえず 使ってみましょう！
-
-%pre%read use-jquery.hs
 
 = GHCJS の欠点
 
