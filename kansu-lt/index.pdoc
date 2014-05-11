@@ -100,13 +100,6 @@ hello world
 vagrant@precise32:~$
 """
 
-= 実行の仕方
-
-%ul
-- コンパイルすると hello.jsexe というディレクトリができる
-- hello.jsexe/all.js というものが実際のスクリプトなので
-  これを node で動かすなり <script> タグでリンクするなりする
-
 = FFI
 
 %ul
