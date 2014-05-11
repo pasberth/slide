@@ -202,12 +202,4 @@ ghcjs src/Main.hs
 - GHCJS は GHC の(ほとんど)すべての機能がブラウザ上で動く夢の処理系
 - 軽量な altJS ではない。使いこなすのは難しい
 
-= おまけ
-
-GHCJS で…
-
-%ul
-- `"http://pasberth.github.io/slide/kansu-lt/lifegame.html"`ライフゲーム` をつくった
-- `"http://pasberth.github.io/paradocs/try-paradocs/"`Try Paradocs` をつくった
-
 = 終わり
