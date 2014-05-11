@@ -1,0 +1,7 @@
+%include paradocs/lib/paradocs/html.pdoc
+
+= pasberth.github.io/slide
+
+%ul
+- `shumatsu\-lambda`ラムダ計算と型の話`
+- `kansu\-lt`GHCJS`
